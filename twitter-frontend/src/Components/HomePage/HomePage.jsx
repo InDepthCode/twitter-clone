@@ -20,7 +20,7 @@ const HomePage = () => {
         item
         xs={12}
         lg={6}
-        className="relative"
+        className="relative hidden lg:block"
       >
         <HomeSection />
       </Grid>
@@ -31,7 +31,7 @@ const HomePage = () => {
         lg={3}
         className="hidden lg:block relative"
       >
-        <HomeSection />
+       <p>Hey</p>
       </Grid>
     </Grid>
   );
