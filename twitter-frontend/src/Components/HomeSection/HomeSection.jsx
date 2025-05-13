@@ -1,72 +1,198 @@
-import { Avatar } from '@mui/material'
-import React from 'react'
-import * as Yup from 'yup'
+import React, { useState } from 'react';
+import { Avatar, Button, CircularProgress, Divider } from '@mui/material';
+import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import ImageIcon from '@mui/icons-material/Image'
-const validationSchema = () =>{
-  content:Yup.string().required("Tweet text is required")
-}
+import ImageIcon from '@mui/icons-material/Image';
+import FmdGoodIcon from '@mui/icons-material/FmdGood';
+import TagFaceIcon from '@mui/icons-material/TagFaces';
+import CloseIcon from '@mui/icons-material/Close';
 
-
+const validationSchema = Yup.object({
+  content: Yup.string().required("Tweet text is required").max(280, "Tweet cannot exceed 280 characters"),
+});
 
 const HomeSection = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [activeTab, setActiveTab] = useState('for-you');
 
-  const handleSubmit= (value) =>{
-    console.log("values ", value);
-  }
+  const handleSubmit = (values, { resetForm }) => {
+    console.log("Submitted:", values);
+    resetForm();
+    setSelectedImage(null);
+  };
 
   const formik = useFormik({
-    intialValue:{
-      content:"",
-      image:""
+    initialValues: {
+      content: "",
+      image: "",
     },
-    onSubmit:handleSubmit,
     validationSchema,
-  })
+    onSubmit: handleSubmit,
+  });
 
-  const handleSelectImage =(event) =>{
+  const handleSelectImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUploadingImage(true);
+      formik.setFieldValue("image", file);
+      setSelectedImage(file);
+      setTimeout(() => {
+        setUploadingImage(false);
+      }, 500);
+    }
+  };
 
-  }
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    formik.setFieldValue("image", "");
+  };
+
+  const remainingChars = 280 - formik.values.content.length;
+  const isReachingLimit = remainingChars <= 20;
 
   return (
-    <div className='space-y-5'>
+    <div className="space-y-5 divide-y divide-gray-200">
+      {/* Header with Tabs */}
+      <div className="sticky top-0 bg-white z-10 backdrop-blur bg-opacity-95">
+        <h1 className="text-xl font-bold px-4 pt-3 text-center">Home</h1>
 
-      <section>
-        <h1 className='py-5 text-xl font-bold opacity-90 text-red-500 '>Home</h1>
-      </section>
+        {/* Tabs */}
+        <div className="flex mt-3">
+          <div
+            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'for-you' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
+            onClick={() => setActiveTab('for-you')}
+          >
+            For you
+          </div>
+          <div
+            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'following' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
+            onClick={() => setActiveTab('following')}
+          >
+            Following
+          </div>
+        </div>
+      </div>
 
-      <section className={`pb-10`}> 
-        <div className='flex items-start space-x-5'>
-          <Avatar alt='username'
-          src= "https://i.pravatar.cc/150?u=consistentmaleid" />
-        <div className='w-full'>
-          <form>
-            <div>
-              <input type="text" name='content' placeholder='What is happening' className={`border-none outline-none text-xl bg-transparent`}  {...formik.getFieldProps("content")}/>
-              {formik.errors.content && formik.touched
-              .content && ( <span className='text-red-500'>{formik.errors.content}</span>)}
-            </div>
+      {/* Tweet Box */}
+      <div className="px-4 pt-3">
+        <div className="flex items-start space-x-3">
+          <Avatar
+            alt="user"
+            src="https://i.pravatar.cc/150?u=consistentmaleid"
+            sx={{ width: 40, height: 40 }}
+          />
 
-            {/* <div>
+          <div className="flex-1">
+            <form onSubmit={formik.handleSubmit} className="w-full">
+              <textarea
+                name="content"
+                placeholder="What's happening?"
+                className={`
+                  w-full text-lg resize-none bg-transparent
+                  placeholder-gray-500 focus:outline-none min-h-[60px]
+                  border-none
+                `}
+                {...formik.getFieldProps("content")}
+              />
 
-            </div> */}
+              {formik.touched.content && formik.errors.content && (
+                <div className="text-red-500 text-sm mb-2">{formik.errors.content}</div>
+              )}
 
-            <div className='flex justify-between items-center mt-5'>
-              <div className='flex space-x-5 items-center'>
-                 <ImageIcon className='text-[#1d9bf0]' />
-                  <input type="file" name='imageFile' className='hidden' onChange={handleSelectImage} />
+              {/* Image Preview */}
+              {selectedImage && (
+                <div className="mt-2 relative">
+                  <div className="absolute top-2 left-2 bg-black bg-opacity-70 rounded-full p-1 cursor-pointer"
+                       onClick={handleRemoveImage}>
+                    <CloseIcon fontSize="small" sx={{ color: 'white' }} />
+                  </div>
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="Selected preview"
+                    className="rounded-2xl max-h-80 object-cover border border-gray-100"
+                  />
+                </div>
+              )}
+
+              {/* Actions */}
+              <div className="flex justify-between items-center mt-3">
+                <div className="flex space-x-1 text-[#1d9bf0]">
+                  <label className="p-2 rounded-full cursor-pointer hover:bg-blue-50 transition-colors">
+                    <ImageIcon sx={{ fontSize: "20px" }} />
+                    <input
+                      type="file"
+                      name="imageFile"
+                      className="hidden"
+                      onChange={handleSelectImage}
+                      accept="image/*"
+                    />
+                  </label>
+                  <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
+                    <FmdGoodIcon sx={{ fontSize: "20px" }} />
+                  </button>
+                  <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
+                    <TagFaceIcon sx={{ fontSize: "20px" }} />
+                  </button>
+                </div>
+
+                <Button
+                  type="submit"
+                  sx={{
+                    borderRadius: '9999px',
+                    padding: '6px 16px',
+                    minWidth: '80px',
+                    backgroundColor: '#1d9bf0',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: '14px',
+                    textTransform: 'none',
+                    '&:hover': {
+                      backgroundColor: '#1a8cd8',
+                    },
+                    '&:disabled': {
+                      backgroundColor: '#8ecdf7',
+                      color: 'white',
+                    }
+                  }}
+                  disabled={uploadingImage || !formik.values.content.trim() || formik.values.content.length > 280}
+                >
+                  {uploadingImage ? (
+                    <CircularProgress size={16} sx={{ color: 'white' }} />
+                  ) : (
+                    'Tweet'
+                  )}
+                </Button>
               </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
+      {/* Feed Divider */}
+      <div className="h-px bg-gray-200 mt-3"></div>
+
+      {/* Sample Tweet - for demonstration */}
+      <div className="px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer border-b border-gray-200">
+        <div className="flex space-x-3">
+          <Avatar
+            alt="sample user"
+            src="https://i.pravatar.cc/150?u=anotheruser"
+            sx={{ width: 40, height: 40 }}
+          />
+          <div>
+            <div className="flex items-center text-sm">
+              <span className="font-bold">Sample User</span>
+              <span className="text-gray-500 ml-1">@sampleuser·12m</span>
             </div>
-
-          </form>
+            <div className="mt-1">
+              Just posted a tweet using our new Twitter clone interface! <span className="text-blue-500">#ReactJS</span> <span className="text-blue-500">#MaterialUI</span>
+            </div>
+          </div>
         </div>
-        </div>
-
-      </section>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default HomeSection
+export default HomeSection;

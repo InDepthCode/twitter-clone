@@ -5,33 +5,22 @@ import HomeSection from '../HomeSection/HomeSection';
 
 const HomePage = () => {
   return (
-    <Grid container className="px-5 lg:px-36 justify-between">
-      {/* Left Part: Navigation (only on large screens) */}
-      <Grid
-        item
-        lg={3}
-        className="hidden lg:block relative"
-      >
-        <Navigation />
+    <Grid container className="min-h-screen bg-white text-black">
+      {/* Left Sidebar - Navigation */}
+      <Grid item lg={3} className="hidden lg:block border-r border-gray-200">
+        <div className="sticky top-0 h-screen overflow-y-auto">
+          <Navigation />
+        </div>
       </Grid>
 
-      {/* Middle Part */}
-      <Grid
-        item
-        xs={12}
-        lg={6}
-        className="relative hidden lg:block"
-      >
+      {/* Center Feed */}
+      <Grid item xs={12} sm={10} md={8} lg={6} className="border-x border-gray-200">
         <HomeSection />
       </Grid>
 
-      {/* Right Part: only on large screens */}
-      <Grid
-        item
-        lg={3}
-        className="hidden lg:block relative"
-      >
-       <p>Hey</p>
+      {/* Right Widgets */}
+      <Grid item lg={3} className="hidden lg:block px-6">
+        New Widget Coming soon..
       </Grid>
     </Grid>
   );

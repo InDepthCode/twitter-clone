@@ -30,7 +30,7 @@ const Navigation = () => {
         top: 0,
         display: 'flex',
         flexDirection: 'column',
-        paddingX: -8,
+        paddingX: -7,
         paddingY: 2,
         borderRight: (theme) => `1px solid ${theme.palette.divider}`,
         width:300
@@ -89,6 +89,7 @@ const Navigation = () => {
                     sx={{
                         borderRadius: '29px',
                         paddingY: '12px',
+                      paddingX: '2px',
                         backgroundColor: '#1d9bf0',
                         color: 'white',
                         fontWeight: 'bold',
