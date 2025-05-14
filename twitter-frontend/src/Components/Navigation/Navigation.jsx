@@ -106,19 +106,34 @@ const Navigation = () => {
           marginTop: 4
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1  }}>
+        {/*<Box sx={{ display: 'flex', alignItems: 'center', gap: 1  }}>*/}
+        {/*  <Avatar*/}
+        {/*    src="https://i.pravatar.cc/150?u=consistentmaleid"*/}
+        {/*    alt="Amrut"*/}
+        {/*    sx={{ width: 30, height: 30 }}*/}
+        {/*  />*/}
+        {/*  <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>*/}
+        {/*    <Typography variant="subtitle2" fontWeight="bold">*/}
+        {/*      Amrut*/}
+        {/*    </Typography>*/}
+        {/*    <span className="text-gray-500 cursor-pointer">@sampleuser</span>*/}
+        {/*  </Box>*/}
+        {/*</Box>*/}
+        <div className="flex space-x-3 gap-2">
           <Avatar
+            alt="sample user"
             src="https://i.pravatar.cc/150?u=consistentmaleid"
-            alt="Amrut"
-            sx={{ width: 30, height: 30 }}
+            sx={{width: 40, height: 40}}
+            className="cursor-pointer"
           />
-          <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-            <Typography variant="subtitle2" fontWeight="bold">
-              Amrut
-            </Typography>
-            <span className="text-gray-500 cursor-pointer">@sampleuser</span>
-          </Box>
-        </Box>
+          <div className='px-5 py-4'>
+            <div className="flex flex-col items-center text-sm">
+              <span className="font-bold cursor-pointer hover:underline">Sample User</span>
+              <span className="text-gray-500 ml-1 cursor-pointer">@sampleuser</span>
+            </div>
+
+          </div>
+        </div>
 
         <IconButton
           aria-label="more"
@@ -129,7 +144,7 @@ const Navigation = () => {
           size="small"
           ref={threeDotsButtonRef}
         >
-          <MoreHorizIcon />
+          <MoreHorizIcon/>
         </IconButton>
 
         <Menu
