@@ -28,8 +28,8 @@ const Navigation = () => {
         top: 0,
         display: 'flex',
         flexDirection: 'column',
-        paddingX: 0,
-        paddingY: 2,
+        paddingX: 1,
+        paddingY: 1,
         borderRight: (theme) => `1px solid ${theme.palette.divider}`,
         width: 300,
       }}
@@ -37,8 +37,8 @@ const Navigation = () => {
       {/* Top: Logo */}
       <Box sx={{ marginBottom: 2, paddingLeft: 2 }}>
         <svg
-          height="40"
-          width="40"
+          height="35"
+          width="35"
           viewBox="0 0 24 24"
           aria-hidden="true"
           className="text-black"
@@ -119,6 +119,7 @@ const Navigation = () => {
         {/*    <span className="text-gray-500 cursor-pointer">@sampleuser</span>*/}
         {/*  </Box>*/}
         {/*</Box>*/}
+
         <div className="flex space-x-3 gap-2">
           <Avatar
             alt="sample user"

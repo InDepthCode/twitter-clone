@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Avatar, Button, CircularProgress } from '@mui/material';
+import { Avatar, Button, CircularProgress, Divider } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import ImageIcon from '@mui/icons-material/Image';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import TagFaceIcon from '@mui/icons-material/TagFaces';
 import CloseIcon from '@mui/icons-material/Close';
+import { Box } from '@mui/material';
 
 const validationSchema = Yup.object({
   content: Yup.string().required("Tweet text is required").max(280, "Tweet cannot exceed 280 characters"),
@@ -48,91 +49,100 @@ const HomeSection = () => {
     formik.setFieldValue("image", "");
   };
 
-  const remainingChars = 280 - formik.values.content.length;
-  const isReachingLimit = remainingChars <= 20;
+  // const remainingChars = 280 - formik.values.content.length;
+  // const isReachingLimit = remainingChars <= 20;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-5 divide-y divide-gray-200">
+    <Box
+      className="space-y-5 divide-y divide-gray-200"
+      sx={{
+        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
+        paddingRight: 2, // optional: add some spacing to the right
+      }}
+    >
       {/* Header with Tabs */}
-      <div className="sticky top-0 bg-white z-10 backdrop-blur bg-opacity-95 border-b border-gray-200">
+      <div className="sticky top-1 bg-white z-10 backdrop-blur bg-opacity-95 ">
+
         {/* Tabs */}
         <div className="flex">
           <div
-            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'for-you' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600 hover:bg-gray-50'}`}
+            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'for-you' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
             onClick={() => setActiveTab('for-you')}
           >
             For you
           </div>
           <div
-            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'following' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600 hover:bg-gray-50'}`}
+            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'following' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
             onClick={() => setActiveTab('following')}
           >
             Following
           </div>
           <div
-            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'grok' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600 hover:bg-gray-50'}`}
+            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'grok' ? 'font-bold border-b-4 border-blue-1000' : 'text-gray-600'}`}
             onClick={() => setActiveTab('grok')}
           >
             Grok
           </div>
-
+          <div
+            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'buildinpublic' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
+            onClick={() => setActiveTab('buildinpublic')}
+          >
+            Build In Public
+          </div>
         </div>
       </div>
 
+      <div className="h-px bg-gray-200 mt-3"></div>
+
       {/* Tweet Box */}
-      <div className="px-4 pt-4 pb-2 bg-white">
+      <div className="mt-6 ">
         <div className="flex items-start space-x-3">
           <Avatar
             alt="user"
             src="https://i.pravatar.cc/150?u=consistentmaleid"
             sx={{width: 40, height: 40}}
-            className="mt-1"
           />
 
-          <div className="flex-1">
+          <div className="flex-1 space-y-5">
             <form onSubmit={formik.handleSubmit} className="w-full">
               <textarea
                 name="content"
                 placeholder="What's happening?"
                 className={`
-                  w-full text-lg resize-none bg-transparent
-                  placeholder-gray-500 focus:outline-none min-h-[80px]
-                  border-none
-                `}
+               w-full text-lg bg-transparent
+              placeholder-gray-500 focus:outline-none min-h-[40px]
+              border-none resize-none
+             `}
+
+                style={{ resize: "none" }}
                 {...formik.getFieldProps("content")}
               />
+
 
               {formik.touched.content && formik.errors.content && (
                 <div className="text-red-500 text-sm mb-2">{formik.errors.content}</div>
               )}
 
-              {/* Character Counter */}
-              {formik.values.content.length > 0 && (
-                <div className={`text-xs ${isReachingLimit ? (remainingChars < 0 ? 'text-red-500' : 'text-orange-500') : 'text-gray-500'} text-right mb-2`}>
-                  {remainingChars}
-                </div>
-              )}
-
               {/* Image Preview */}
               {selectedImage && (
-                <div className="mt-2 relative rounded-2xl overflow-hidden border border-gray-200">
+                <div className="mt-2 relative">
                   <div className="absolute top-2 left-2 bg-black bg-opacity-70 rounded-full p-1 cursor-pointer"
                        onClick={handleRemoveImage}>
-                    <CloseIcon fontSize="small" sx={{ color: 'white' }} />
+                    <CloseIcon fontSize="small" sx={{color: 'white'}}/>
                   </div>
                   <img
                     src={URL.createObjectURL(selectedImage)}
                     alt="Selected preview"
-                    className="w-full max-h-80 object-cover"
+                    className="rounded-2xl max-h-80 object-cover border border-gray-100"
                   />
                 </div>
               )}
 
               {/* Actions */}
-              <div className="flex justify-between items-center mt-3 border-t border-gray-100 pt-3">
+              <div className="flex justify-between items-center mt-2">
                 <div className="flex space-x-1 text-[#1d9bf0]">
                   <label className="p-2 rounded-full cursor-pointer hover:bg-blue-50 transition-colors">
-                    <ImageIcon sx={{ fontSize: "20px" }} />
+                    <ImageIcon sx={{fontSize: "20px"}}/>
                     <input
                       type="file"
                       name="imageFile"
@@ -142,10 +152,10 @@ const HomeSection = () => {
                     />
                   </label>
                   <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
-                    <FmdGoodIcon sx={{ fontSize: "20px" }} />
+                    <FmdGoodIcon sx={{fontSize: "20px"}}/>
                   </button>
                   <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
-                    <TagFaceIcon sx={{ fontSize: "20px" }} />
+                    <TagFaceIcon sx={{fontSize: "20px"}}/>
                   </button>
                 </div>
 
@@ -171,7 +181,7 @@ const HomeSection = () => {
                   disabled={uploadingImage || !formik.values.content.trim() || formik.values.content.length > 280}
                 >
                   {uploadingImage ? (
-                    <CircularProgress size={16} sx={{ color: 'white' }} />
+                    <CircularProgress size={16} sx={{color: 'white'}}/>
                   ) : (
                     'Post'
                   )}
@@ -182,29 +192,32 @@ const HomeSection = () => {
         </div>
       </div>
 
+      {/* Feed Divider */}
+      <div className="h-px bg-gray-200 mt-3"></div>
+
       {/* Sample Tweet - for demonstration */}
-      <div className="px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-200">
+      <div className="space-x-5 hover:bg-gray-50  border-b border-gray-200">
         <div className="flex space-x-3">
           <Avatar
             alt="sample user"
             src="https://i.pravatar.cc/150?u=anotheruser"
-            sx={{ width: 40, height: 40 }}
+            sx={{width: 40, height: 40}}
             className="cursor-pointer"
           />
-          <div className='px-5 py-4'>
+          <div>
             <div className="flex items-center text-sm">
-              <span className="font-bold cursor-pointer hover:underline">Sample User</span>
-              <span className="text-gray-500 ml-1 cursor-pointer">@sampleuser</span>
+              <span className="font-bold cursor-pointer">Sample User</span>
+              <span className="text-gray-500 ml-1 cursor-pointer">@sampleuser·12m</span>
             </div>
             <div className="mt-1">
               Just posted a tweet using our new Twitter clone interface!
-              <span className="text-blue-500 ml-1 hover:underline cursor-pointer">#ReactJS</span>
-              <span className="text-blue-500 ml-1 hover:underline cursor-pointer">#MaterialUI</span>
+              <span className="text-blue-500">#ReactJS</span>
+              <span className="text-blue-500">#MaterialUI</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   );
 };
 
