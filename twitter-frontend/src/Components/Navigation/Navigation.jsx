@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Box, Button, Avatar, Typography, Menu, MenuItem, IconButton } from '@mui/material';
 import { navigationMenu } from './NavigationMenu';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const Navigation = () => {
@@ -18,7 +17,6 @@ const Navigation = () => {
   };
 
   const handleLogout = () => {
-    // Implement your logout logic here
     console.log('Logout clicked');
     handleClose();
   };
@@ -30,10 +28,10 @@ const Navigation = () => {
         top: 0,
         display: 'flex',
         flexDirection: 'column',
-        paddingX: -7,
+        paddingX: 0,
         paddingY: 2,
         borderRight: (theme) => `1px solid ${theme.palette.divider}`,
-        width:300
+        width: 300,
       }}
     >
       {/* Top: Logo */}
@@ -52,7 +50,7 @@ const Navigation = () => {
       </Box>
 
       {/* Middle: Navigation Menu */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 2 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 0 }}>
         {navigationMenu.map((item, index) => {
           const Icon = item.icon;
           return (
@@ -68,51 +66,60 @@ const Navigation = () => {
                 '&:hover': {
                   backgroundColor: (theme) => theme.palette.action.hover,
                   cursor: 'pointer',
-                  borderRadius: '50px',
                 },
                 transition: 'background-color 0.15s ease-in-out',
               }}
             >
               <Icon fontSize="medium" className="text-gray-800" />
-              <span className="text-lg font-medium text-gray-900">
-                {item.title}
-              </span>
+              <span className="text-lg font-medium text-gray-900">{item.title}</span>
             </Box>
           );
         })}
       </Box>
 
       {/* Bottom: Post Button */}
-            <Box sx={{ padding: 2 }}>
-                <Button
-                    fullWidth
-                    sx={{
-                        borderRadius: '29px',
-                        paddingY: '12px',
-                      paddingX: '2px',
-                        backgroundColor: '#1d9bf0',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: '1rem',
-                        textTransform: 'none',
-                    }}
-                >
-                    Post
-                </Button>
-            </Box>
+      <Box sx={{ padding: 2 }}>
+        <Button
+          fullWidth
+          sx={{
+            borderRadius: '29px',
+            paddingY: '12px',
+            backgroundColor: '#1d9bf0',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            textTransform: 'none',
+          }}
+        >
+          Post
+        </Button>
+      </Box>
 
-      {/* Bottom: Avatar and Username with Three Dots and Menu */}
-      <Box sx={{ display: 'flex', alignItems: 'center', paddingY: 2, paddingX:7,  justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      {/* Bottom: User Info and Menu */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          paddingY: 2,
+          paddingX: 2,
+          justifyContent: 'space-between',
+          marginTop: 4
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1  }}>
           <Avatar
-            src= "https://i.pravatar.cc/150?u=consistentmaleid"
+            src="https://i.pravatar.cc/150?u=consistentmaleid"
             alt="Amrut"
             sx={{ width: 30, height: 30 }}
           />
-          <Typography variant="subtitle2" fontWeight="bold">
+          <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+            <Typography variant="subtitle2" fontWeight="bold">
               Amrut
-          </Typography>
+            </Typography>
+            <span className="text-gray-500 cursor-pointer">@sampleuser</span>
+          </Box>
         </Box>
+
         <IconButton
           aria-label="more"
           id="basic-button"
@@ -124,6 +131,7 @@ const Navigation = () => {
         >
           <MoreHorizIcon />
         </IconButton>
+
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
