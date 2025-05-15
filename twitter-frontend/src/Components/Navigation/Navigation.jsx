@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Box, Button, Avatar, Typography, Menu, MenuItem, IconButton } from '@mui/material';
 import { navigationMenu } from './NavigationMenu';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 const Navigation = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -68,7 +69,7 @@ const Navigation = () => {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 1.5,
+                gap: 3,
                 paddingX: 2,
                 paddingY: 1,
                 borderRadius: '50px',
@@ -80,7 +81,7 @@ const Navigation = () => {
               }}
             >
               <Icon fontSize="medium" className="text-gray-800" />
-              <span className="text-lg font-medium text-gray-900">{item.title}</span>
+              <span className="text-lg font-medium text-gray-900 ">{item.title}</span>
             </Box>
           );
         })}

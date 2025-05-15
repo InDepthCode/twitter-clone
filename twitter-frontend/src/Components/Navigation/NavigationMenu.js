@@ -1,32 +1,32 @@
-import HomeIcon from "@mui/icons-material/Home";
-import ExploreIcon from "@mui/icons-material/Explore";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MessageIcon from "@mui/icons-material/Message";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import GroupIcon from "@mui/icons-material/Group";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import PendingIcon from "@mui/icons-material/Pending";
+import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
+import FlashOnOutlinedIcon from '@mui/icons-material/FlashOnOutlined';
+import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 
 export const navigationMenu = [
   {
     title: "Home",
-    icon: HomeIcon,
+    icon: HomeOutlinedIcon,
     path: "/home",
   },
   {
     title: "Explore",
-    icon: ExploreIcon,
+    icon: SearchOutlinedIcon,
     path: "/explore",
   },
   {
     title: "Notifications",
-    icon: NotificationsIcon,
+    icon: NotificationsOutlinedIcon,
     path: "/notifications",
   },
   {
     title: "Messages",
-    icon: MessageIcon,
+    icon: EmailOutlinedIcon,
     path: "/messages",
   },
   {
@@ -36,22 +36,22 @@ export const navigationMenu = [
   },
   {
     title: "Communities",
-    icon: GroupIcon,
+    icon: PeopleOutlinedIcon,
     path: "/communities",
   },
   {
     title: "Verified",
-    icon: VerifiedIcon,
+    icon: FlashOnOutlinedIcon,
     path: "/verified",
   },
   {
     title: "Profile",
-    icon: AccountCircleIcon,
+    icon: Person2OutlinedIcon,
     path: "/profile",
   },
   {
     title: "More",
-    icon: PendingIcon,
+    icon: PendingOutlinedIcon,
     path: "/pending",
   },
 ];
