@@ -37,6 +37,7 @@ const Navigation = () => {
     >
       {/* Top: Logo */}
       <Box sx={{ marginBottom: 2, paddingLeft: 2 }}>
+
         <svg
           height="35"
           width="35"
