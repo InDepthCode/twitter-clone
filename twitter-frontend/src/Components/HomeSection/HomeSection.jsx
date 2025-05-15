@@ -12,6 +12,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import TweetCard from './TweetCard';
+
 
 const tweets = [
   {
@@ -291,8 +294,9 @@ const HomeSection = () => {
       {/* Feed */}
       <Box mt={0} px={0} maxWidth={650} margin="0 auto">
         {tweets.map((tweet) => (
-          <SingleTweet key={tweet.id} tweet={tweet} />
+          <TweetCard key={tweet.id} tweet={tweet} />
         ))}
+
       </Box>
 
     </Box>
