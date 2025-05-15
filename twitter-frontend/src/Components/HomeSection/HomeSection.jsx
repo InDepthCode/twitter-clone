@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Button, CircularProgress, IconButton, Box, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -15,7 +15,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import TweetCard from './TweetCard';
 
-
+// Sample image URLs
 const tweets = [
   {
     id: 1,
@@ -30,6 +30,7 @@ const tweets = [
         <Typography component="span" color="primary">#MaterialUI</Typography>
       </>
     ),
+    image:'https://images.unsplash.com/photo-1552410260-0fd9b577afa6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlvbnxlbnwwfHwwfHx8MA%3D%3D', // Ensure the first tweet has an image
   },
   {
     id: 2,
@@ -114,50 +115,6 @@ const HomeSection = () => {
     formik.setFieldValue("image", "");
   };
 
-  const SingleTweet = ({ tweet }) => {
-    return (
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', p: 2, borderBottom: '1px solid #e0e0e0' }}>
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
-          <Avatar alt={tweet.user} src={tweet.avatar} sx={{ width: 48, height: 48, mr: 2 }} />
-          <Box sx={{ flexGrow: 1 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-              <Typography fontWeight="bold" sx={{ mr: 0.5 }}>{tweet.user}</Typography>
-              <Typography color="textSecondary" sx={{ mr: 0.5 }}>@{tweet.username}</Typography>
-              <Typography color="textSecondary" fontSize="small">· {tweet.time}</Typography>
-            </Box>
-            <Typography variant="body2" sx={{ mt: 0.5, wordBreak: 'break-word' }}>
-              {tweet.content}
-            </Typography>
-          </Box>
-        </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1, ml: '56px', width: 'calc(100% - 56px)' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '75%' }}> {/* Added width: '100%' */}
-            <IconButton size="small" aria-label="comment">
-              <ChatBubbleOutlineIcon fontSize="small" />
-            </IconButton>
-            <IconButton size="small" aria-label="retweet">
-              <RepeatIcon fontSize="small" />
-            </IconButton>
-            <IconButton size="small" aria-label="like">
-              <FavoriteBorderIcon fontSize="small" />
-            </IconButton>
-            <IconButton size="small" aria-label="analytics">
-              <BarChartOutlinedIcon fontSize="small" />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton size="small" aria-label="bookmark">
-              <BookmarkBorderIcon fontSize="small" />
-            </IconButton>
-            <IconButton size="small" aria-label="share">
-              <ShareOutlinedIcon fontSize="small" />
-            </IconButton>
-          </Box>
-        </Box>
-      </Box>
-    );
-  };
-
   return (
     <Box
       sx={{
@@ -167,7 +124,6 @@ const HomeSection = () => {
         borderRight: (theme) => `1px solid ${theme.palette.divider}`
       }}
     >
-
       {/* Header with Tabs */}
       <Box sx={{
         position: 'sticky',
@@ -296,9 +252,7 @@ const HomeSection = () => {
         {tweets.map((tweet) => (
           <TweetCard key={tweet.id} tweet={tweet} />
         ))}
-
       </Box>
-
     </Box>
   );
 };

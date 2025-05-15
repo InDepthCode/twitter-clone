@@ -7,3 +7,34 @@
   text-align: center;
 }
 
+/*.icon-button svg.liked {*/
+/*  color: #e91e63; !* pink[600] *!*/
+/*}*/
+
+/*.icon-retweet {*/
+/*  color: inherit;*/
+/*  transition: color 0.2s ease;*/
+/*}*/
+
+/*.icon-retweet.clicked {*/
+/*  color: #1b5e20; !* Dark Green *!*/
+/*}*/
+
+.icon-like {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.icon-like.liked {
+  color: #e91e63; /* pink */
+}
+
+.icon-retweet {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.icon-retweet.clicked {
+  color: #1b5e20; /* dark green */
+}
+
