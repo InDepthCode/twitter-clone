@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Avatar, Button, CircularProgress, IconButton, Box, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -6,13 +6,9 @@ import ImageIcon from '@mui/icons-material/Image';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import TagFaceIcon from '@mui/icons-material/TagFaces';
 import CloseIcon from '@mui/icons-material/Close';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import RepeatIcon from '@mui/icons-material/Repeat';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import VerifiedIcon from '@mui/icons-material/Verified';
+import GifBoxIcon from '@mui/icons-material/GifBox';
+import BallotIcon from '@mui/icons-material/Ballot';
+import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
 import TweetCard from './TweetCard';
 
 // Sample image URLs
@@ -82,6 +78,7 @@ const HomeSection = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState('for-you');
+  const iconColor = '#1d9bf0'; // Define the desired icon color
 
   const handleSubmit = (values, { resetForm }) => {
     console.log("Submitted:", values);
@@ -120,7 +117,7 @@ const HomeSection = () => {
       sx={{
         paddingRight: 2,
         paddingLeft: 1,
-        paddingTop: -1,
+        paddingTop: 0, // Changed from -1
         borderRight: (theme) => `1px solid ${theme.palette.divider}`
       }}
     >
@@ -145,7 +142,7 @@ const HomeSection = () => {
           ].map((tab) => (
             <div
               key={tab.id}
-              className={`flex-1 text-center py-2.5 font-medium cursor-pointer transition-all duration-200 ${
+              className={`flex-1 text-center py-2 font-medium cursor-pointer transition-all duration-200 ${
                 activeTab === tab.id
                   ? 'font-bold text-black border-b-4 border-blue-500'
                   : 'text-gray-600 hover:text-black'
@@ -159,12 +156,12 @@ const HomeSection = () => {
       </Box>
 
       {/* Tweet Box */}
-      <Box sx={{ mt: 2, ml: 1, pb: 1, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
-        <Box className="flex items-start space-x-3">
+      <Box sx={{ mt: 1.5, ml: 1, pb: 1, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
+        <Box className="flex items-start mr-11">
           <Avatar
             alt="user"
             src="https://i.pravatar.cc/150?u=consistentmaleid"
-            sx={{ width: 40, height: 40, mr: 1 }}
+            sx={{ width: 45, height: 45, mr: 2 }}
           />
           <Box sx={{ flex: 1 }}>
             <form onSubmit={formik.handleSubmit} className="w-full">
@@ -176,7 +173,7 @@ const HomeSection = () => {
                       placeholder-gray-500 focus:outline-none min-h-[50px]
                       border-none resize-none
                     `}
-                style={{ resize: "none", fontSize: 16 }}
+                style={{ resize: "none", fontSize: 22 }}
                 {...formik.getFieldProps("content")}
               />
               {formik.touched.content && formik.errors.content && (
@@ -208,17 +205,23 @@ const HomeSection = () => {
                   />
                 </Box>
               )}
-              <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
+              <Box  display="flex" justifyContent="space-between" alignItems="center">
                 <Box className="flex space-x-2 text-[#1d9bf0]">
                   <IconButton component="label" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <ImageIcon sx={{ fontSize: 20 }} />
+                    <ImageIcon sx={{ fontSize: 20,color: iconColor }}/>
                     <input type="file" name="imageFile" hidden accept="image/*" onChange={handleSelectImage} />
                   </IconButton>
                   <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <FmdGoodIcon sx={{ fontSize: 20 }} />
+                    <FmdGoodIcon sx={{ fontSize: 20,color: iconColor }} />
                   </IconButton>
                   <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <TagFaceIcon sx={{ fontSize: 20 }} />
+                    <GifBoxIcon sx={{ fontSize: 20,color: iconColor }} />
+                  </IconButton>
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
+                    <EditCalendarSharpIcon sx={{ fontSize: 20,color: iconColor }} />
+                  </IconButton>
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
+                    <TagFaceIcon sx={{ fontSize: 20,color: iconColor }}/>
                   </IconButton>
                 </Box>
                 <Box sx={{ p: 0.5 , marginRight: '10px'  }}>

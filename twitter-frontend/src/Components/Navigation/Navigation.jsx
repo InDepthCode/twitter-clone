@@ -26,6 +26,7 @@ const Navigation = () => {
       sx={{
         position: 'sticky',
         top: 0,
+        bottom: 0,
         display: 'flex',
         flexDirection: 'column',
         paddingX: 1,
@@ -49,8 +50,15 @@ const Navigation = () => {
         </svg>
       </Box>
 
-      {/* Middle: Navigation Menu */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 0 }}>
+      {/* Middle: Navigation Menu (Takes up remaining space) */}
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+        marginBottom: 0,
+        flexGrow: 1, // Allows it to grow and take available vertical space
+        overflowY: 'auto', // Enables scrolling if the content overflows
+      }}>
         {navigationMenu.map((item, index) => {
           const Icon = item.icon;
           return (
@@ -77,8 +85,8 @@ const Navigation = () => {
         })}
       </Box>
 
-      {/* Bottom: Post Button */}
-      <Box sx={{ padding: 2 }}>
+      {/* Bottom: Post Button (Pushed to the bottom) */}
+      <Box sx={{ padding: 2, mt: 'auto' }}> {/* mt: 'auto' pushes it to the bottom */}
         <Button
           fullWidth
           sx={{
@@ -89,42 +97,28 @@ const Navigation = () => {
             fontWeight: 'bold',
             fontSize: '1rem',
             textTransform: 'none',
-            gap:0
+            gap: 0
           }}
         >
           Post
         </Button>
       </Box>
 
-      {/* Bottom: User Info and Menu */}
+      {/* Bottom: User Info and Menu (Sticks to the very bottom) */}
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          paddingY: 2,
+          paddingY: 10,
           paddingX: 2,
           justifyContent: 'space-between',
-          marginTop: 4
         }}
       >
-        {/*<Box sx={{ display: 'flex', alignItems: 'center', gap: 1  }}>*/}
-        {/*  <Avatar*/}
-        {/*    src="https://i.pravatar.cc/150?u=consistentmaleid"*/}
-        {/*    alt="Amrut"*/}
-        {/*    sx={{ width: 30, height: 30 }}*/}
-        {/*  />*/}
-        {/*  <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>*/}
-        {/*    <Typography variant="subtitle2" fontWeight="bold">*/}
-        {/*      Amrut*/}
-        {/*    </Typography>*/}
-        {/*    <span className="text-gray-500 cursor-pointer">@sampleuser</span>*/}
-        {/*  </Box>*/}
-        {/*</Box>*/}
-        <div className="flex space-x-3 gap-2">
+        <div className="flex space-x-3 gap-2 py-10">
           <Avatar
             alt="sample user"
             src="https://i.pravatar.cc/150?u=consistentmaleid"
-            sx={{width: 40, height: 40}}
+            sx={{ width: 40, height: 40 }}
             className="cursor-pointer"
           />
           <div className='px-5 py-4'>
@@ -132,7 +126,6 @@ const Navigation = () => {
               <span className="font-bold cursor-pointer hover:underline">Sample User</span>
               <span className="text-gray-500 ml-1 cursor-pointer">@sampleuser</span>
             </div>
-
           </div>
         </div>
 
@@ -145,7 +138,7 @@ const Navigation = () => {
           size="small"
           ref={threeDotsButtonRef}
         >
-          <MoreHorizIcon/>
+          <MoreHorizIcon />
         </IconButton>
 
         <Menu

@@ -50,13 +50,12 @@ const TweetCard = ({ tweet }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', p: 2, borderBottom: '1px solid #e0e0e0' }}>
       <Box sx={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
-        <Avatar alt={tweet.user} src={tweet.avatar} sx={{ width: 48, height: 48, mr: 2 }} />
+        <Avatar alt={tweet.user} src={tweet.avatar} sx={{ width: 45, height: 45, mr: 1, mt: 0.5 }} /> {/* Added mt: 0.5 */}
         <Box sx={{ flexGrow: 1 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
             <Typography fontWeight="bold" sx={{ mr: 0.5 }}>{tweet.user}</Typography>
             <Typography color="textSecondary" sx={{ mr: 0.5 }}>@{tweet.username}</Typography>
             <Typography color="textSecondary" fontSize="small">· {tweet.time}</Typography>
-
           </Box>
           <Typography variant="body2" sx={{ mt: 0.5, wordBreak: 'break-word' }}>
             {tweet.content}
@@ -79,7 +78,7 @@ const TweetCard = ({ tweet }) => {
             <ChatBubbleOutlineIcon fontSize="small" />
             {/* You might want to fetch and display the actual comment count */}
             {/* <Typography variant="caption" sx={{ ml: 0.5 }}>{tweet.commentCount}</Typography> */}
-             <Typography variant="caption" sx={{ ml: 0.5 }}>13</Typography>
+            <Typography variant="caption" sx={{ ml: 0.5 }}>13</Typography>
           </IconButton>
 
           <IconButton
@@ -88,7 +87,7 @@ const TweetCard = ({ tweet }) => {
           >
             <RepeatIcon fontSize="small" className={`icon-retweet ${retweeted ? 'clicked' : ''}`} ref={retweetIconRef} />
             {/* You might want to fetch and display the actual retweet count */}
-             <Typography variant="caption" sx={{ ml: 0.5 }}>25</Typography>
+            <Typography variant="caption" sx={{ ml: 0.5 }}>25</Typography>
           </IconButton>
 
           <IconButton size="small" onClick={handleLikeClick}>
@@ -99,14 +98,14 @@ const TweetCard = ({ tweet }) => {
             )}
             {/* You might want to fetch and display the actual like count */}
             {/* <Typography variant="caption" sx={{ ml: 0.5 }}>{tweet.likeCount}</Typography> */}
-             <Typography variant="caption" sx={{ ml: 0.5 }}>200</Typography>
+            <Typography variant="caption" sx={{ ml: 0.5 }}>200</Typography>
           </IconButton>
 
           <IconButton size="small" onClick={handleAnalyticsClick}>
             <BarChartOutlinedIcon fontSize="small" />
             {/* You might want to fetch and display some analytics count */}
             {/* <Typography variant="caption" sx={{ ml: 0.5 }}>{tweet.analyticsCount}</Typography> */}
-             <Typography variant="caption" sx={{ ml: 0.5 }}>1.2k</Typography>
+            <Typography variant="caption" sx={{ ml: 0.5 }}>1.2k</Typography>
           </IconButton>
         </Box>
 

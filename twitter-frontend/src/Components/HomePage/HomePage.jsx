@@ -7,8 +7,8 @@ const HomePage = () => {
   return (
     <Grid container className="min-h-screen w-full bg-white text-black">
       {/* Left Sidebar - Navigation */}
-      <Grid item lg={3} className="hidden lg:block border-gray-200">
-        <div className="sticky top-0 min-h-screen overflow-y-auto">
+      <Grid item lg={3} className="hidden lg:block border-gray-200" sx={{ minHeight: '100vh' }}> {/* Added minHeight */}
+        <div className="sticky top-0 overflow-y-auto"> {/* Removed min-h-screen from here */}
           <Navigation />
         </div>
       </Grid>
