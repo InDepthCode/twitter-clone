@@ -2,6 +2,7 @@ import { Grid } from '@mui/material';
 import React from 'react';
 import Navigation from '../Navigation/Navigation';
 import HomeSection from '../HomeSection/HomeSection';
+import Explore from '../ExploreSection/Explore';
 
 const HomePage = () => {
   return (
@@ -20,7 +21,7 @@ const HomePage = () => {
 
       {/* Right Widgets */}
       <Grid item lg={3} className="hidden lg:block px-6">
-        New Widget Coming soon..
+       <Explore />
       </Grid>
     </Grid>
   );
