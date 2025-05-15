@@ -5,10 +5,10 @@ import HomeSection from '../HomeSection/HomeSection';
 
 const HomePage = () => {
   return (
-    <Grid container className="min-h-screen bg-white text-black">
+    <Grid container className="min-h-screen w-full bg-white text-black">
       {/* Left Sidebar - Navigation */}
-      <Grid item lg={3} className="hidden lg:block border-r border-gray-200">
-        <div className="sticky top-0 h-screen overflow-y-auto">
+      <Grid item lg={3} className="hidden lg:block border-gray-200">
+        <div className="sticky top-0 min-h-screen overflow-y-auto">
           <Navigation />
         </div>
       </Grid>

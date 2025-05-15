@@ -1,12 +1,67 @@
 import React, { useState } from 'react';
-import { Avatar, Button, CircularProgress, Divider } from '@mui/material';
+import { Avatar, Button, CircularProgress, IconButton, Box, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import ImageIcon from '@mui/icons-material/Image';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import TagFaceIcon from '@mui/icons-material/TagFaces';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box } from '@mui/material';
+
+const tweets = [
+  {
+    id: 1,
+    user: 'Sample User',
+    username: 'sampleuser',
+    avatar: 'https://i.pravatar.cc/150?u=sampleuser',
+    time: '12m',
+    content: (
+      <>
+        Just posted a tweet using our new Twitter clone interface!{' '}
+        <Typography component="span" color="primary">#ReactJS</Typography>{' '}
+        <Typography component="span" color="primary">#MaterialUI</Typography>
+      </>
+    ),
+  },
+  {
+    id: 2,
+    user: 'John Doe',
+    username: 'johndoe',
+    avatar: 'https://i.pravatar.cc/150?u=johndoe',
+    time: '45m',
+    content: (
+      <>Loving the new UI updates! So clean and fast. <Typography component="span" color="primary">#UX</Typography>{' '}
+        <Typography component="span" color="primary">#Design</Typography>
+      </>
+    ),
+  },
+  {
+    id: 3,
+    user: 'Jane Smith',
+    username: 'janesmith',
+    avatar: 'https://i.pravatar.cc/150?u=janesmith',
+    time: '1h',
+    content: (
+      <>
+        Anyone else excited for React 18? Can’t wait to try out the new features!{' '}
+        <Typography component="span" color="primary">#React18</Typography>
+      </>
+    ),
+  },
+  {
+    id: 4,
+    user: 'Dev Guru',
+    username: 'devguru',
+    avatar: 'https://i.pravatar.cc/150?u=devguru',
+    time: '2h',
+    content: (
+      <>
+        Pro tip: Always write clean, readable code. It saves time later!{' '}
+        <Typography component="span" color="primary">#CodeQuality</Typography>{' '}
+        <Typography component="span" color="primary">#BestPractices</Typography>
+      </>
+    ),
+  },
+];
 
 const validationSchema = Yup.object({
   content: Yup.string().required("Tweet text is required").max(280, "Tweet cannot exceed 280 characters"),
@@ -51,180 +106,158 @@ const HomeSection = () => {
 
   return (
     <Box
-      className="space-y-5 divide-y divide-gray-200"
       sx={{
         paddingRight: 2,
-        paddingLeft:1,
-        paddingTop:1,
+        paddingLeft: 1,
+        paddingTop: 1,
+        borderRight: (theme) => `1px solid ${theme.palette.divider}`
       }}
     >
 
       {/* Header with Tabs */}
-
       <Box sx={{
         position: 'sticky',
-        top: '2px', // Tailwind `top-1` = 0.25rem = 4px
+        top: '2px',
         bgcolor: 'white',
         zIndex: 10,
-        backdropFilter: 'blur(8px)', // approximate blur
-        backgroundColor: 'rgba(255, 255, 255, 1)', // to mimic bg-opacity-100
-        marginBottom:2
+        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Slightly transparent white
+        marginBottom: 1
       }}>
         {/* Tabs */}
-        <div className="flex">
-          <div
-            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'for-you' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('for-you')}
-          >
-            For you
-          </div>
-          <div
-            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'following' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('following')}
-          >
-            Following
-          </div>
-          <div
-            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'grok' ? 'font-bold border-b-4 border-blue-1000' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('grok')}
-          >
-            Grok
-          </div>
-          <div
-            className={`flex-1 text-center py-4 font-medium cursor-pointer transition-colors ${activeTab === 'buildinpublic' ? 'font-bold border-b-4 border-blue-500' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('buildinpublic')}
-          >
-            Build In Public
-          </div>
+        <div className="flex border-b border-gray-200">
+          {[
+            { id: 'for-you', label: 'For You' },
+            { id: 'following', label: 'Following' },
+            { id: 'grok', label: 'Grok' },
+            { id: 'buildinpublic', label: 'Build In Public' },
+            { id: 'webdev', label: 'Web' }
+          ].map((tab) => (
+            <div
+              key={tab.id}
+              className={`flex-1 text-center py-3 font-medium cursor-pointer transition-all duration-200 ${
+                activeTab === tab.id
+                  ? 'font-bold text-black border-b-4 border-blue-500'
+                  : 'text-gray-600 hover:text-black'
+              }`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </div>
+          ))}
         </div>
       </Box>
 
-      {/* Divider with margin-bottom */}
-      <Box sx={{ height: '1px', backgroundColor: 'grey.200', mt: 1 }}></Box>
-
-      {/* Tweet Box  */}
-      <Box sx={{ mt: 2, ml:1 }}> {/* Increased margin-top to 8 */}
+      {/* Tweet Box */}
+      <Box sx={{ mt: 2, ml: 1, pb: 2, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
         <Box className="flex items-start space-x-3">
           <Avatar
             alt="user"
             src="https://i.pravatar.cc/150?u=consistentmaleid"
-            sx={{ width: 40, height: 40 , mr:1  }}
+            sx={{ width: 40, height: 40, mr: 1 }}
           />
-
-          <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1005px' }}>
+          <Box sx={{ flex: 1 }}>
             <form onSubmit={formik.handleSubmit} className="w-full">
                             <textarea
                               name="content"
                               placeholder="What's happening?"
                               className={`
-               w-full text-lg bg-transparent
-              placeholder-gray-500 focus:outline-none min-h-[70px]
-              border-none resize-none  
-             `}
-
-                              style={{ resize: "none" , marginTop:5 , fontSize:20 }}
+                                    w-full text-lg bg-transparent
+                                    placeholder-gray-500 focus:outline-none min-h-[50px]
+                                    border-none resize-none
+                                `}
+                              style={{ resize: "none", fontSize: 16 }}
                               {...formik.getFieldProps("content")}
                             />
-
-
               {formik.touched.content && formik.errors.content && (
-                <div className="text-red-500 text-sm mb-2">{formik.errors.content}</div>
+                <Typography color="error" variant="caption" display="block">{formik.errors.content}</Typography>
               )}
-
-              {/* Image Preview */}
               {selectedImage && (
-                <div className="mt-2 relative">
-                  <div className="absolute top-2 left-2 bg-black bg-opacity-70 rounded-full p-1 cursor-pointer"
-                       onClick={handleRemoveImage}>
-                    <CloseIcon fontSize="small" sx={{ color: 'white' }} />
-                  </div>
+                <Box mt={2} position="relative">
+                  <IconButton
+                    onClick={handleRemoveImage}
+                    sx={{
+                      position: 'absolute',
+                      top: 8,
+                      left: 8,
+                      bgcolor: 'rgba(0, 0, 0, 0.7)',
+                      color: 'white',
+                      borderRadius: '50%',
+                      width: 24,
+                      height: 24,
+                      zIndex: 1,
+                      '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.9)' },
+                    }}
+                  >
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
                   <img
                     src={URL.createObjectURL(selectedImage)}
                     alt="Selected preview"
-                    className="rounded-2xl max-h-80 object-cover border border-gray-100"
+                    className="rounded-xl max-h-80 object-cover border border-gray-100"
                   />
-                </div>
+                </Box>
               )}
-
-              {/* Actions */}
-              <div className="flex justify-between items-center mt-2">
-                <div className="flex space-x-1 text-[#1d9bf0]">
-                  <label className="p-2 rounded-full cursor-pointer hover:bg-blue-50 transition-colors">
-                    <ImageIcon sx={{ fontSize: "20px" }} />
-                    <input
-                      type="file"
-                      name="imageFile"
-                      className="hidden"
-                      onChange={handleSelectImage}
-                      accept="image/*"
-                    />
-                  </label>
-                  <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
-                    <FmdGoodIcon sx={{ fontSize: "20px" }} />
-                  </button>
-                  <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
-                    <TagFaceIcon sx={{ fontSize: "20px" , ml:23}} />
-                  </button>
-                </div>
-
+              <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
+                <Box className="flex space-x-2 text-[#1d9bf0]">
+                  <IconButton component="label" className="hover:bg-blue-50 transition-colors" sx={{ p: 1 }}>
+                    <ImageIcon sx={{ fontSize: 20 }} />
+                    <input type="file" name="imageFile" hidden accept="image/*" onChange={handleSelectImage} />
+                  </IconButton>
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 1 }}>
+                    <FmdGoodIcon sx={{ fontSize: 20 }} />
+                  </IconButton>
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 1 }}>
+                    <TagFaceIcon sx={{ fontSize: 20 }} />
+                  </IconButton>
+                </Box>
                 <Button
                   type="submit"
                   sx={{
                     borderRadius: '9999px',
-                    padding: '6px 16px',
-                    minWidth: '80px',
+                    px: 2,
+                    py: 1,
+                    minWidth: 80,
                     backgroundColor: '#1d9bf0',
                     color: 'white',
                     fontWeight: 'bold',
-                    fontSize: '14px',
+                    fontSize: 15,
                     textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: '#1a8cd8',
-                    },
-                    '&:disabled': {
-                      backgroundColor: '#8ecdf7',
-                      color: 'white',
-                    }
+                    '&:hover': { backgroundColor: '#1a8cd8' },
+                    '&:disabled': { backgroundColor: '#8ecdf7', color: 'white' },
                   }}
                   disabled={uploadingImage || !formik.values.content.trim() || formik.values.content.length > 280}
                 >
-                  {uploadingImage ? (
-                    <CircularProgress size={16} sx={{ color: 'white' }} />
-                  ) : (
-                    'Post'
-                  )}
+                  {uploadingImage ? <CircularProgress size={16} sx={{ color: 'white' }} /> : 'Post'}
                 </Button>
-              </div>
+              </Box>
             </form>
           </Box>
         </Box>
       </Box>
 
-      {/* Feed Divider */}
-      <div className="h-px bg-gray-200 mt-3"></div>
+      {/* Feed */}
+      <Box mt={2} px={2} maxWidth={650} margin="0 auto">
+        {tweets.map(({ id, user, username, avatar, time, content }) => (
+          <Box
+            key={id}
+            sx={{ py: 2, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+            className="flex items-start cursor-pointer hover:bg-gray-50"
+          >
+            <Avatar alt={user} src={avatar} sx={{ width: 48, height: 48, mr: 2 }} />
+            <Box sx={{ flex: 1 }}>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Typography fontWeight="bold" className="hover:underline">{user}</Typography>
+                <Typography color="textSecondary" fontSize="small">@{username} · {time}</Typography>
+              </Box>
+              <Typography variant="body2" mt={0.5} className="whitespace-pre-wrap break-words">
+                {content}
+              </Typography>
+            </Box>
+          </Box>
+        ))}
+      </Box>
 
-      {/* Sample Tweet - for demonstration */}
-      <div className="space-x-5 hover:bg-gray-50  border-b border-gray-200">
-        <div className="flex space-x-3">
-          <Avatar
-            alt="sample user"
-            src="https://i.pravatar.cc/150?u=anotheruser"
-            sx={{ width: 40, height: 40 }}
-            className="cursor-pointer"
-          />
-          <div>
-            <div className="flex items-center text-sm">
-              <span className="font-bold cursor-pointer">Sample User</span>
-              <span className="text-gray-500 ml-1 cursor-pointer">@sampleuser·12m</span>
-            </div>
-            <div className="mt-1">
-              Just posted a tweet using our new Twitter clone interface!
-              <span className="text-blue-500">#ReactJS</span>
-              <span className="text-blue-500">#MaterialUI</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </Box>
   );
 };
