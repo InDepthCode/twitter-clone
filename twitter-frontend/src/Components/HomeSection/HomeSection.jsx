@@ -251,18 +251,18 @@ const HomeSection = () => {
               )}
               <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
                 <Box className="flex space-x-2 text-[#1d9bf0]">
-                  <IconButton component="label" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 }}>
+                  <IconButton component="label" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
                     <ImageIcon sx={{ fontSize: 20 }} />
                     <input type="file" name="imageFile" hidden accept="image/*" onChange={handleSelectImage} />
                   </IconButton>
-                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 }}>
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
                     <FmdGoodIcon sx={{ fontSize: 20 }} />
                   </IconButton>
-                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 }}>
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
                     <TagFaceIcon sx={{ fontSize: 20 }} />
                   </IconButton>
                 </Box>
-                <Box sx={{ mt: 1 }}>
+                <Box sx={{ p: 0.5 , marginRight: '10px'  }}>
                   <Button
                     type="submit"
                     sx={{
