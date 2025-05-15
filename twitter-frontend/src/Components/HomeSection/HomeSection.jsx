@@ -49,20 +49,27 @@ const HomeSection = () => {
     formik.setFieldValue("image", "");
   };
 
-  // const remainingChars = 280 - formik.values.content.length;
-  // const isReachingLimit = remainingChars <= 20;
-
   return (
     <Box
       className="space-y-5 divide-y divide-gray-200"
       sx={{
-        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
-        paddingRight: 2, // optional: add some spacing to the right
+        paddingRight: 2,
+        paddingLeft:1,
+        paddingTop:1,
       }}
     >
-      {/* Header with Tabs */}
-      <div className="sticky top-1 bg-white z-10 backdrop-blur bg-opacity-95 ">
 
+      {/* Header with Tabs */}
+
+      <Box sx={{
+        position: 'sticky',
+        top: '2px', // Tailwind `top-1` = 0.25rem = 4px
+        bgcolor: 'white',
+        zIndex: 10,
+        backdropFilter: 'blur(8px)', // approximate blur
+        backgroundColor: 'rgba(255, 255, 255, 1)', // to mimic bg-opacity-100
+        marginBottom:2
+      }}>
         {/* Tabs */}
         <div className="flex">
           <div
@@ -90,33 +97,34 @@ const HomeSection = () => {
             Build In Public
           </div>
         </div>
-      </div>
+      </Box>
 
-      <div className="h-px bg-gray-200 mt-3"></div>
+      {/* Divider with margin-bottom */}
+      <Box sx={{ height: '1px', backgroundColor: 'grey.200', mt: 1 }}></Box>
 
-      {/* Tweet Box */}
-      <div className="mt-6 ">
-        <div className="flex items-start space-x-3">
+      {/* Tweet Box  */}
+      <Box sx={{ mt: 2, ml:1 }}> {/* Increased margin-top to 8 */}
+        <Box className="flex items-start space-x-3">
           <Avatar
             alt="user"
             src="https://i.pravatar.cc/150?u=consistentmaleid"
-            sx={{width: 40, height: 40}}
+            sx={{ width: 40, height: 40 , mr:1  }}
           />
 
-          <div className="flex-1 space-y-5">
+          <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1005px' }}>
             <form onSubmit={formik.handleSubmit} className="w-full">
-              <textarea
-                name="content"
-                placeholder="What's happening?"
-                className={`
+                            <textarea
+                              name="content"
+                              placeholder="What's happening?"
+                              className={`
                w-full text-lg bg-transparent
-              placeholder-gray-500 focus:outline-none min-h-[40px]
-              border-none resize-none
+              placeholder-gray-500 focus:outline-none min-h-[70px]
+              border-none resize-none  
              `}
 
-                style={{ resize: "none" }}
-                {...formik.getFieldProps("content")}
-              />
+                              style={{ resize: "none" , marginTop:5 , fontSize:20 }}
+                              {...formik.getFieldProps("content")}
+                            />
 
 
               {formik.touched.content && formik.errors.content && (
@@ -128,7 +136,7 @@ const HomeSection = () => {
                 <div className="mt-2 relative">
                   <div className="absolute top-2 left-2 bg-black bg-opacity-70 rounded-full p-1 cursor-pointer"
                        onClick={handleRemoveImage}>
-                    <CloseIcon fontSize="small" sx={{color: 'white'}}/>
+                    <CloseIcon fontSize="small" sx={{ color: 'white' }} />
                   </div>
                   <img
                     src={URL.createObjectURL(selectedImage)}
@@ -142,7 +150,7 @@ const HomeSection = () => {
               <div className="flex justify-between items-center mt-2">
                 <div className="flex space-x-1 text-[#1d9bf0]">
                   <label className="p-2 rounded-full cursor-pointer hover:bg-blue-50 transition-colors">
-                    <ImageIcon sx={{fontSize: "20px"}}/>
+                    <ImageIcon sx={{ fontSize: "20px" }} />
                     <input
                       type="file"
                       name="imageFile"
@@ -152,10 +160,10 @@ const HomeSection = () => {
                     />
                   </label>
                   <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
-                    <FmdGoodIcon sx={{fontSize: "20px"}}/>
+                    <FmdGoodIcon sx={{ fontSize: "20px" }} />
                   </button>
                   <button type="button" className="p-2 rounded-full hover:bg-blue-50 transition-colors">
-                    <TagFaceIcon sx={{fontSize: "20px"}}/>
+                    <TagFaceIcon sx={{ fontSize: "20px" , ml:23}} />
                   </button>
                 </div>
 
@@ -181,16 +189,16 @@ const HomeSection = () => {
                   disabled={uploadingImage || !formik.values.content.trim() || formik.values.content.length > 280}
                 >
                   {uploadingImage ? (
-                    <CircularProgress size={16} sx={{color: 'white'}}/>
+                    <CircularProgress size={16} sx={{ color: 'white' }} />
                   ) : (
                     'Post'
                   )}
                 </Button>
               </div>
             </form>
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
 
       {/* Feed Divider */}
       <div className="h-px bg-gray-200 mt-3"></div>
@@ -201,7 +209,7 @@ const HomeSection = () => {
           <Avatar
             alt="sample user"
             src="https://i.pravatar.cc/150?u=anotheruser"
-            sx={{width: 40, height: 40}}
+            sx={{ width: 40, height: 40 }}
             className="cursor-pointer"
           />
           <div>

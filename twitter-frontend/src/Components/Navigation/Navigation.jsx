@@ -89,6 +89,7 @@ const Navigation = () => {
             fontWeight: 'bold',
             fontSize: '1rem',
             textTransform: 'none',
+            gap:0
           }}
         >
           Post
@@ -119,7 +120,6 @@ const Navigation = () => {
         {/*    <span className="text-gray-500 cursor-pointer">@sampleuser</span>*/}
         {/*  </Box>*/}
         {/*</Box>*/}
-
         <div className="flex space-x-3 gap-2">
           <Avatar
             alt="sample user"
