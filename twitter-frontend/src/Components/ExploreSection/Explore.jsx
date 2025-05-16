@@ -27,10 +27,10 @@ const Explore = () => {
   ];
 
   const whatsHappening = [
-    { id: 1, category: 'Technology · Trending', hashtag: '#InnovationNow', posts: '2,500 posts' },
-    { id: 2, category: 'Sports · Trending', hashtag: '#GameDayLive', posts: '15K posts' },
-    { id: 3, category: 'Music · Trending', hashtag: '#NewMusicAlert', posts: '8,700 posts' },
-    { id: 4, category: 'Trending', hashtag: '#WeekendVibes', posts: '' },
+    { id: 1, category: 'FIFA Women\'s World Cup · LIVE', hashtag: 'Philippines vs Switzerland', posts: '' },
+    { id: 2, category: 'Entertainment · Trending', hashtag: '#TheMarvels', posts: '34.3K Tweets' },
+    { id: 3, category: 'Entertainment · Trending', hashtag: '#TheMarvels', posts: '34.3K Tweets' },
+    { id: 4, category: 'Entertainment · Trending', hashtag: '#TheMarvels', posts: '34.3K Tweets' },
   ];
 
   return (
@@ -69,24 +69,44 @@ const Explore = () => {
         </IconButton>
       </Box>
 
-      {/* Get Verified Button */}
-      <Button
-        onClick={handleGetVerifiedClick}
-        variant="contained"
-        startIcon={<VerifiedIcon />}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          mb: 3,
-          borderRadius: '20px',
-          textTransform: 'none',
-          fontWeight: 'bold',
-          padding: '8px 16px',
-          width: '100%',
-        }}
-      >
-        Get Verified
-      </Button>
+      {/* Get Verified Section */}
+      <Box sx={{ mb: 3, borderRadius: '8px', bgcolor: 'lightblue', p: 2 }}>
+        <Typography fontWeight="bold">Get Verified</Typography>
+        <Typography variant="body2" color="text.secondary" mb={1}>
+          Subscribe to unlock new features
+        </Typography>
+        <Button
+          onClick={handleGetVerifiedClick}
+          variant="contained"
+          sx={{ borderRadius: '20px', textTransform: 'none', fontWeight: 'bold' }}
+          fullWidth
+        >
+          GET VERIFIED
+        </Button>
+      </Box>
+
+      <Divider sx={{ my: 3 }} />
+
+      {/* What's happening */}
+      <Box>
+        <Typography variant="h6" fontWeight="bold" mb={2} sx={{ pl: 0, ml: 0 }}>
+          What's happening
+        </Typography>
+        {whatsHappening.map((item) => (
+          <Box key={item.id} sx={{ py: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pl: 0, ml: 0 }}>
+            <Box sx={{ flexGrow: 1 }}>
+              {item.category && <Typography variant="caption" color="text.secondary" mb={0.5} sx={{ pl: 0, ml: 0 }}>{item.category}</Typography>}
+              <Typography fontWeight="bold" variant="subtitle1" sx={{ wordBreak: 'break-word', pl: 0, ml: 0 }}>{item.hashtag}</Typography>
+              {item.posts && <Typography variant="caption" color="text.secondary" sx={{ pl: 0, ml: 0 }}>{item.posts}</Typography>}
+            </Box>
+            <IconButton size="small">
+              <MoreHorizIcon />
+            </IconButton>
+          </Box>
+        ))}
+      </Box>
+
+      <Divider sx={{ my: 3 }} />
 
       {/* You might like */}
       <Box mb={3}>
@@ -107,26 +127,6 @@ const Explore = () => {
           </Box>
         ))}
         <Typography color="primary" sx={{ mt: 1, cursor: 'pointer' }}>Show more</Typography>
-      </Box>
-      <Divider sx={{ my: 3 }} />
-
-      {/* What's happening */}
-      <Box>
-        <Typography variant="h6" fontWeight="bold" mb={2} sx={{ pl: 0, ml: 0 }}> {/* Added ml: 0 */}
-          What's happening
-        </Typography>
-        {whatsHappening.map((item) => (
-          <Box key={item.id} sx={{ py: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pl: 0, ml: 0 }}> {/* Added ml: 0 */}
-            <Box sx={{ flexGrow: 1 }}>
-              {item.category && <Typography variant="caption" color="text.secondary" mb={0.5} sx={{ pl: 0, ml: 0 }}>{item.category}</Typography>} {/* Added ml: 0 */}
-              <Typography fontWeight="bold" variant="subtitle1" sx={{ wordBreak: 'break-word', pl: 0, ml: 0 }}>{item.hashtag}</Typography> {/* Added ml: 0 */}
-              {item.posts && <Typography variant="caption" color="text.secondary" sx={{ pl: 0, ml: 0 }}>{item.posts}</Typography>} {/* Added ml: 0 */}
-            </Box>
-            <IconButton size="small">
-              <MoreHorizIcon />
-            </IconButton>
-          </Box>
-        ))}
       </Box>
     </Box>
   );
