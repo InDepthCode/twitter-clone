@@ -31,13 +31,15 @@ const Navigation = () => {
         display: 'flex',
         flexDirection: 'column',
         paddingX: 1,
-        paddingY: 1,
+        paddingY: 2,
+        paddingRight:1,
+        paddingLeft:1,
         borderRight: (theme) => `1px solid ${theme.palette.divider}`,
-        width: 300,
+        width: 250,
       }}
     >
       {/* Top: Logo */}
-      <Box sx={{ marginBottom: 2, paddingLeft: 2 }}>
+      <Box sx={{ marginBottom: 3, paddingLeft: 2 }}>
 
         <svg
           height="35"
@@ -60,6 +62,7 @@ const Navigation = () => {
         marginBottom: 0,
         flexGrow: 1, // Allows it to grow and take available vertical space
         overflowY: 'auto', // Enables scrolling if the content overflows
+
       }}>
         {navigationMenu.map((item, index) => {
           const Icon = item.icon;

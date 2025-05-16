@@ -48,7 +48,7 @@ const TweetCard = ({ tweet }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', p: 2, borderBottom: '1px solid #e0e0e0' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', p: 2, borderBottom: '1px solid #e0e0e0', pr:4 }}>
       <Box sx={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
         <Avatar alt={tweet.user} src={tweet.avatar} sx={{ width: 45, height: 45, mr: 1, mt: 0.5 }} /> {/* Added mt: 0.5 */}
         <Box sx={{ flexGrow: 1 }}>

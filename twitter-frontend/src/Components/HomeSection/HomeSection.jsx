@@ -115,8 +115,8 @@ const HomeSection = () => {
   return (
     <Box
       sx={{
-        paddingRight: 2,
-        paddingLeft: 1,
+        paddingRight: -1,
+        paddingLeft: -1,
         paddingTop: 0, // Changed from -1
         borderRight: (theme) => `1px solid ${theme.palette.divider}`
       }}
@@ -124,12 +124,13 @@ const HomeSection = () => {
       {/* Header with Tabs */}
       <Box sx={{
         position: 'sticky',
-        top: '1px',
+        top: '0px',
         bgcolor: 'white',
         zIndex: 10,
         backdropFilter: 'blur(8px)',
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        marginBottom: 0
+        marginBottom: 0,
+        ml:1
       }}>
         {/* Tabs */}
         <Box className="flex border-b border-gray-200" sx={{ py: 1.5, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
@@ -156,7 +157,7 @@ const HomeSection = () => {
       </Box>
 
       {/* Tweet Box */}
-      <Box sx={{ mt: 1.5, ml: 1, pb: 1, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
+      <Box sx={{ mt: 1, ml: 1, pb: 1, borderBottom: (theme) => `1px solid ${theme.palette.divider}` , pl:1,pt:0}}>
         <Box className="flex items-start mr-11">
           <Avatar
             alt="user"

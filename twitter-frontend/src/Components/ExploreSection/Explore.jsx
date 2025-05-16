@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, InputBase, Paper, IconButton, Avatar, Button } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 const Explore = () => {
   const trendingTopics = [
@@ -37,12 +37,12 @@ const Explore = () => {
           bgcolor: 'grey.100',
         }}
       >
-        <IconButton sx={{ p: '10px' }} aria-label="search">
-          <SearchIcon />
+        <IconButton sx={{ p: '10px', }} aria-label="search">
+          <SearchOutlinedIcon />
         </IconButton>
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Twitter"
+          placeholder="Search "
           inputProps={{ 'aria-label': 'search twitter' }}
         />
       </Paper>
