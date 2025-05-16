@@ -3,6 +3,7 @@ import { Box, Button, Avatar, Typography, Menu, MenuItem, IconButton } from '@mu
 import { navigationMenu } from './NavigationMenu';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import { Link } from 'react-router-dom'; // Import the Link component
 
 const Navigation = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -67,25 +68,26 @@ const Navigation = () => {
         {navigationMenu.map((item, index) => {
           const Icon = item.icon;
           return (
-            <Box
-              key={index}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 3,
-                paddingX: 2,
-                paddingY: 1,
-                borderRadius: '50px',
-                '&:hover': {
-                  backgroundColor: (theme) => theme.palette.action.hover,
-                  cursor: 'pointer',
-                },
-                transition: 'background-color 0.15s ease-in-out',
-              }}
-            >
-              <Icon fontSize="medium" className="text-gray-800" />
-              <span className="text-lg font-medium text-gray-900 ">{item.title}</span>
-            </Box>
+            <Link to={item.path} key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  paddingX: 2,
+                  paddingY: 1,
+                  borderRadius: '50px',
+                  '&:hover': {
+                    backgroundColor: (theme) => theme.palette.action.hover,
+                    cursor: 'pointer',
+                  },
+                  transition: 'background-color 0.15s ease-in-out',
+                }}
+              >
+                <Icon fontSize="medium" className="text-gray-800" />
+                <span className="text-lg font-medium text-gray-900 ">{item.title}</span>
+              </Box>
+            </Link>
           );
         })}
       </Box>

@@ -12,7 +12,7 @@ export const navigationMenu = [
   {
     title: "Home",
     icon: HomeOutlinedIcon,
-    path: "/home",
+    path: "/",
   },
   {
     title: "Explore",
@@ -52,6 +52,6 @@ export const navigationMenu = [
   {
     title: "More",
     icon: PendingOutlinedIcon,
-    path: "/pending",
+    path: "/more", // Changed from /pending for clarity
   },
 ];

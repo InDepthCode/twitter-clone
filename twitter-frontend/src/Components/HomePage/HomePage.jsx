@@ -3,6 +3,10 @@ import React from 'react';
 import Navigation from '../Navigation/Navigation';
 import HomeSection from '../HomeSection/HomeSection';
 import Explore from '../ExploreSection/Explore';
+import Profile from "../Profile/Profile.jsx";
+import { Route, Routes } from 'react-router-dom';
+
+
 
 const HomePage = () => {
   return (
@@ -15,8 +19,16 @@ const HomePage = () => {
       </Grid>
 
       {/* Center Feed */}
-      <Grid item xs={12} sm={10} md={8} lg={6} className="border-x border-gray-200" sx={{ ml: { lg: '250px' } }}>
-        <HomeSection />
+      <Grid item xs={12} sm={10} md={8} lg={6} className="border-x border-gray-200" sx={{ ml: { lg: '250px' , width:'50%'} }}>
+
+        <Routes>
+          <Route path="/" element={<HomeSection />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+
+        </Routes>
+
+
+
       </Grid>
 
       {/* Right Widgets */}
