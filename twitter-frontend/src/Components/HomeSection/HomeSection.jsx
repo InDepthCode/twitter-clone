@@ -122,16 +122,7 @@ const HomeSection = () => {
       }}
     >
       {/* Header with Tabs */}
-      <Box sx={{
-        position: 'sticky',
-        top: '0px',
-        bgcolor: 'white',
-        zIndex: 10,
-        backdropFilter: 'blur(8px)',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        marginBottom: 0,
-        ml:1
-      }}>
+      <Box>
         {/* Tabs */}
         <Box className="flex border-b border-gray-200" sx={{ py: 1.5, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
           {[

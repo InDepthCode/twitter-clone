@@ -1,83 +1,32 @@
 import React from 'react';
-import { Box, Typography, IconButton, Avatar, Divider } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
+import {Box, IconButton, Typography} from '@mui/material'; // Import Box for layout
+import bannerimg from '../../assets/banner.jpg';
 
 const Profile = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate(-1);
-  };
+  const handleBack = () => navigate(-1);
 
   return (
-    <Box
-      sx={{
-        padding: 2, // Add some overall padding
-        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
-        minHeight: '100vh', // Ensure it takes at least the full viewport height
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      {/* Header */}
-      <Box sx={{
-        zIndex: 10,
-        display: 'flex',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        paddingY: 1.5,
-        borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-        marginBottom: 2, // Add some space below the header
-      }}>
-        <IconButton onClick={handleBack} sx={{ mr: 2 }}>
-          <ArrowBackIcon sx={{ cursor: 'pointer' }} />
+    <Box>
+      <Box
+        className="z-50 flex items-center sticky top-0 bg-white bg-opacity-95 border-b border-gray-200 p-1 w-100%"
+        sx={{ justifyContent: 'flex-start' , ml:0.2, mt:2}} // Align back button and title to the start
+      >
+        <IconButton onClick={handleBack} sx={{mr:0}}>
+          <ArrowBackIcon className="cursor-pointer text-gray-800" />
         </IconButton>
-        <Typography variant="h6" fontWeight="bold">
-          Profile
+        <Typography variant="h6" className="ml-4 font-bold text-gray-900 opacity-90">
+          Code with Amrut
         </Typography>
       </Box>
 
-      {/* Profile Content */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, padding: 2 }}>
-        <Avatar
-          alt="User Profile"
-          src="https://i.pravatar.cc/150?u=amrut" // Replace with actual user image
-          sx={{ width: 120, height: 120 }}
-        />
-        <Typography variant="h5" fontWeight="bold">
-          FullStack Noob
-        </Typography>
-        <Typography color="textSecondary">
-          @code_with_amrut
-        </Typography>
-        <Divider sx={{ width: '80%', marginY: 2 }} />
-        <Typography variant="body2" textAlign="center" color="textSecondary">
-          Passionate about coding and building awesome things! Sharing my journey and insights.
-        </Typography>
-
-        {/* Add more profile sections here */}
-        <Box sx={{ width: '100%', marginTop: 3 }}>
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
-            Recent Activity
-          </Typography>
-          <Typography variant="body1" color="textSecondary">
-            No recent activity to show.
-          </Typography>
-        </Box>
-
-        <Box sx={{ width: '100%', marginTop: 2 }}>
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
-            Followers
-          </Typography>
-          <Typography variant="body1" color="textSecondary">
-            No followers yet.
-          </Typography>
-        </Box>
-
-        {/* You can add more sections like "Following", "Tweets", etc. */}
+      {/* Main profile content will go here, it will be centered due to the parent Box */}
+      <Box sx={{ padding: 1, width: '100%' }}>
+        <section>
+          <img src={bannerimg} className='w-[100%] h-[15rem]'></img>
+        </section>
       </Box>
     </Box>
   );
