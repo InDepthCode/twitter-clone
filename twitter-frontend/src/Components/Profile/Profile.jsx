@@ -8,6 +8,8 @@ import pfp from '../../assets/pfp3.jpg'; // Assuming you have a profile picture
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 function handleOpenProfileModel() {
   console.log("Open profile model");
@@ -28,6 +30,7 @@ const Profile = () => {
   const joinedDate = "Joined Jun 2022"; // Replace with actual joined date
   const followingCount = 300; // Replace with actual following count
   const followersCount =" 1M"; // Replace with actual followers count
+
 
   return (
     <Box>
@@ -52,7 +55,7 @@ const Profile = () => {
       {/* Profile Info Section */}
       <Box className="pl-6 relative">
         {/* Avatar */}
-        <Box sx={{ position: 'absolute', top: '-9rem', left: '1rem', display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ position: 'absolute', top: '-9rem', left: '1rem', display: 'flex', alignItems: 'center', ml:1 }}>
           <Avatar
             alt={displayName}
             src={pfp} // Use your imported profile picture
@@ -62,12 +65,14 @@ const Profile = () => {
           {/* The verified icon in the image seems to be next to the display name, not the avatar */}
         </Box>
 
+
         {/* Edit Profile Button */}
         <Box sx={{ position: 'absolute', top: '-5rem', right: '1rem' }}>
+          {/*<EmailOutlinedIcon />*/}
           <Button
             variant="outlined"
             size="small"
-            sx={{ borderRadius: '9999px', color: 'black', borderColor: 'rgba(0, 0, 0, 0.23)' }}
+            sx={{ borderRadius: '9999px', color: 'black', borderColor: 'rgba(0, 0, 0, 0.23)' , mr:3 }}
             onClick={isCurrentUserProfile ? handleOpenProfileModel : handleFollowUser}
           >
             {isCurrentUserProfile ? 'Edit profile' : 'Follow'}
@@ -75,19 +80,19 @@ const Profile = () => {
         </Box>
 
         {/* User Details */}
-        <Box mt={12} ml={2}>
+        <Box mt={12} ml={3}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="h6" fontWeight="bold" sx={{ mr: 0.5 }}>
               {displayName}
             </Typography>
-            <CheckCircleIcon sx={{ color: '#1DA1F2', fontSize: '1.1rem' }} />
+            <VerifiedIcon sx={{ color: '#1DA1F2', fontSize: '1.1rem' , ml:1}} />
           </Box>
           <Typography color="textSecondary" sx={{ ml:'-82%'}}>
             {username}
           </Typography>
           <Typography mt={1} ml={-9}>{bio}</Typography>
           <Box mt={1.5} ml={1} color="textSecondary" sx={{ display: 'flex', gap: 2, alignItems: 'center', fontSize: '0.9rem' }}>
-            <Typography sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+            <Typography sx={{ display: 'flex', alignItems: 'center', mr: 0 }}>
               <BusinessCenterOutlinedIcon sx={{ mr: 0.5, fontSize: 'inherit' }} />
               Education
             </Typography>
@@ -100,12 +105,12 @@ const Profile = () => {
               {joinedDate}
             </Typography>
           </Box>
-          <Box mt={2} ml={2} sx={{ display: 'flex', gap: 2 }}>
-            <Button size="small" sx={{ fontWeight: 'bold', color: '#1D9BF0', padding: 0, minWidth: 0 }}>
-              {followingCount} <Typography component="span" fontWeight="normal" color="textSecondary" sx={{ ml: 0.5 }}>Following</Typography>
+          <Box mt={2} ml={1} sx={{ display: 'flex', gap: 3 }}>
+            <Button size="medium" sx={{ fontWeight: 'bold', color: 'black', padding: 0, minWidth: 0 }}>
+              {followingCount} <Typography component="span" fontWeight="normal" color="textSecondary" sx={{ ml: 0.5 , textTransform: 'none'  }}>Following</Typography>
             </Button>
-            <Button size="small" sx={{ fontWeight: 'bold', color: '#1D9BF0', padding: 0, minWidth: 0 }}>
-              {followersCount} <Typography component="span" fontWeight="normal" color="textSecondary" sx={{ ml: 0.5 }}>Followers</Typography>
+            <Button size="medium" sx={{ fontWeight: 'bold', color: 'black', padding: 0, minWidth: 0 }}>
+              {followersCount} <Typography component="span" fontWeight="normal" color="textSecondary" sx={{ ml: 0.5, textTransform: 'none'  }}>Followers</Typography>
             </Button>
           </Box>
         </Box>
