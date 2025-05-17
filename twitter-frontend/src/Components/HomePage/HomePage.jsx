@@ -19,7 +19,7 @@ const HomePage = () => {
       </Grid>
 
       {/* Center Feed */}
-      <Grid item xs={12} sm={10} md={8} lg={6} className="border-x border-gray-200" sx={{ ml: { lg: '250px' , width:'50%'}, borderRight: (theme) => `1px solid ${theme.palette.divider}` }}>
+      <Grid item xs={12} sm={10} md={8} lg={6} className="border-x border-gray-200" sx={{ ml: { lg: '250px' , width:'52%'}, borderRight: (theme) => `1px solid ${theme.palette.divider}` }}>
 
         <Routes>
           <Route path="/" element={<HomeSection />}></Route>
