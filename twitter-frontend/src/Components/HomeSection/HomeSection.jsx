@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Button, CircularProgress, IconButton, Box, Typography } from '@mui/material';
+import { Avatar, Button, CircularProgress, IconButton, Box, Typography, Tabs, Tab } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import ImageIcon from '@mui/icons-material/Image';
@@ -7,12 +7,11 @@ import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import TagFaceIcon from '@mui/icons-material/TagFaces';
 import CloseIcon from '@mui/icons-material/Close';
 import GifBoxIcon from '@mui/icons-material/GifBox';
-import BallotIcon from '@mui/icons-material/Ballot';
 import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
 import TweetCard from './TweetCard';
-{/*checking if its updated */}
+
 // Sample image URLs
-const tweets = [
+const allTweets = [ // Renamed to allTweets to represent the full dataset
   {
     id: 1,
     user: 'Sample User',
@@ -26,7 +25,8 @@ const tweets = [
         <Typography component="span" color="primary">#MaterialUI</Typography>
       </>
     ),
-    image:'https://images.unsplash.com/photo-1552410260-0fd9b577afa6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlvbnxlbnwwfHwwfHx8MA%3D%3D', // Ensure the first tweet has an image
+    image: 'https://images.unsplash.com/photo-1552410260-0fd9b577afa6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlvbnxlbnwwfHwwfHx8MA%3D%3D', // Ensure the first tweet has an image
+    tab: 'for-you', // Added a 'tab' property to categorize tweets
   },
   {
     id: 2,
@@ -40,6 +40,7 @@ const tweets = [
         <Typography component="span" color="primary">#Design</Typography>
       </>
     ),
+    tab: 'following',
   },
   {
     id: 3,
@@ -53,6 +54,7 @@ const tweets = [
         <Typography component="span" color="primary">#React18</Typography>
       </>
     ),
+    tab: 'for-you',
   },
   {
     id: 4,
@@ -67,6 +69,25 @@ const tweets = [
         <Typography component="span" color="primary">#BestPractices</Typography>
       </>
     ),
+    tab: 'webdev',
+  },
+  {
+    id: 5,
+    user: 'Grok Master',
+    username: 'grok_master',
+    avatar: 'https://i.pravatar.cc/150?u=grok_master',
+    time: '5h',
+    content: 'Just grokking some new concepts!',
+    tab: 'grok',
+  },
+  {
+    id: 6,
+    user: 'Builder',
+    username: 'build_in_public',
+    avatar: 'https://i.pravatar.cc/150?u=build_in_public',
+    time: '8h',
+    content: 'Sharing my progress on my latest build!',
+    tab: 'buildinpublic',
   },
 ];
 
@@ -74,14 +95,37 @@ const validationSchema = Yup.object({
   content: Yup.string().required("Tweet text is required").max(280, "Tweet cannot exceed 280 characters"),
 });
 
+const tabsData = [
+  { id: 'for-you', label: 'For You' },
+  { id: 'following', label: 'Following' },
+  { id: 'grok', label: 'Grok' },
+  { id: 'buildinpublic', label: 'Build In Public' },
+  { id: 'webdev', label: 'Web' },
+];
+
 const HomeSection = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState('for-you');
+  const [tabValue, setTabValue] = useState(0); // State for Tabs component value
+  const [filteredTweets, setFilteredTweets] = useState(allTweets.filter(tweet => tweet.tab === 'for-you'));
   const iconColor = '#1d9bf0'; // Define the desired icon color
 
   const handleSubmit = (values, { resetForm }) => {
     console.log("Submitted:", values);
+    const newTweet = {
+      id: Date.now(),
+      user: 'Current User', // Replace with actual user info
+      username: 'current_user', // Replace with actual username
+      avatar: 'https://i.pravatar.cc/150?u=current_user', // Replace with actual avatar
+      time: '0m',
+      content: values.content,
+      image: selectedImage ? URL.createObjectURL(selectedImage) : null,
+      tab: activeTab, // Assign the current active tab to the new tweet
+    };
+    setFilteredTweets([newTweet, ...filteredTweets]);
+    // Optionally update allTweets as well
+    // setAllTweets([newTweet, ...allTweets]);
     resetForm();
     setSelectedImage(null);
   };
@@ -112,6 +156,16 @@ const HomeSection = () => {
     formik.setFieldValue("image", "");
   };
 
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+    const selectedTabId = tabsData[newValue].id;
+    setActiveTab(selectedTabId);
+    console.log(`Active Tab: ${selectedTabId}`);
+    // Filter tweets based on the selected tab
+    const filtered = allTweets.filter(tweet => tweet.tab === selectedTabId);
+    setFilteredTweets(filtered);
+  };
+
   return (
     <Box
       sx={{
@@ -123,32 +177,57 @@ const HomeSection = () => {
     >
       {/* Header with Tabs */}
       <Box>
-        {/* Tabs */}
-        <Box className="flex border-b border-gray-200" sx={{ py: 1.5, borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
-          {[
-            { id: 'for-you', label: 'For You' },
-            { id: 'following', label: 'Following' },
-            { id: 'grok', label: 'Grok' },
-            { id: 'buildinpublic', label: 'Build In Public' },
-            { id: 'webdev', label: 'Web' }
-          ].map((tab) => (
-            <div
-              key={tab.id}
-              className={`flex-1 text-center py-2 font-medium cursor-pointer transition-all duration-200 ${
-                activeTab === tab.id
-                  ? 'font-bold text-black border-b-4 border-blue-500'
-                  : 'text-gray-600 hover:text-black'
-              }`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.label}
-            </div>
-          ))}
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={tabValue}
+            onChange={handleTabChange}
+            aria-label="home tabs"
+            variant="scrollable"
+            scrollButtons="auto"
+            indicatorColor="primary"
+            textColor="inherit"
+          >
+            {tabsData.map((tab, index) => (
+              <Tab
+                key={tab.id}
+                label={tab.label}
+                id={`tab-${tab.id}`}
+                aria-controls={`tabpanel-${tab.id}`}
+                sx={{
+                  fontWeight: 'medium',
+                  '&.Mui-selected': {
+                    fontWeight: 'bold',
+                    color: 'black',
+                  },
+                  '&:hover': {
+                    color: 'black',
+                  },
+                }}
+              />
+            ))}
+          </Tabs>
         </Box>
+
+        {/* Tab Panels (Conditionally render content if needed) */}
+        {/* {tabsData.map((tab, index) => (
+          <Box
+            key={tab.id}
+            role="tabpanel"
+            hidden={tabValue !== index}
+            id={`tabpanel-${tab.id}`}
+            aria-labelledby={`tab-${tab.id}`}
+            mt={2}
+          >
+            {tabValue === index && (
+              <Typography>{`Content for ${tab.label}`}</Typography>
+            )}
+          </Box>
+        ))} */}
       </Box>
 
       {/* Tweet Box */}
-      <Box sx={{ mt: 1, ml: 1, pb: 1, borderBottom: (theme) => `1px solid ${theme.palette.divider}` , pl:1,pt:0}}>
+      <Box sx={{ mt: 1, ml: 1, pb: 1, borderBottom: (theme) => `1px solid ${theme.palette.divider}`, pl: 1, pt: 0 }}>
+        {/* ... (Tweet input box code remains the same) ... */}
         <Box className="flex items-start mr-11">
           <Avatar
             alt="user"
@@ -197,26 +276,26 @@ const HomeSection = () => {
                   />
                 </Box>
               )}
-              <Box  display="flex" justifyContent="space-between" alignItems="center">
+              <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box className="flex space-x-2 text-[#1d9bf0]">
-                  <IconButton component="label" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <ImageIcon sx={{ fontSize: 20,color: iconColor }}/>
+                  <IconButton component="label" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5, marginRight: '10px' }}>
+                    <ImageIcon sx={{ fontSize: 20, color: iconColor }} />
                     <input type="file" name="imageFile" hidden accept="image/*" onChange={handleSelectImage} />
                   </IconButton>
-                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <FmdGoodIcon sx={{ fontSize: 20,color: iconColor }} />
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5, marginRight: '10px' }}>
+                    <FmdGoodIcon sx={{ fontSize: 20, color: iconColor }} />
                   </IconButton>
-                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <GifBoxIcon sx={{ fontSize: 20,color: iconColor }} />
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5, marginRight: '10px' }}>
+                    <GifBoxIcon sx={{ fontSize: 20, color: iconColor }} />
                   </IconButton>
-                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <EditCalendarSharpIcon sx={{ fontSize: 20,color: iconColor }} />
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5, marginRight: '10px' }}>
+                    <EditCalendarSharpIcon sx={{ fontSize: 20, color: iconColor }} />
                   </IconButton>
-                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5 , marginRight: '10px'  }}>
-                    <TagFaceIcon sx={{ fontSize: 20,color: iconColor }}/>
+                  <IconButton type="button" className="hover:bg-blue-50 transition-colors" sx={{ p: 0.5, marginRight: '10px' }}>
+                    <TagFaceIcon sx={{ fontSize: 20, color: iconColor }} />
                   </IconButton>
                 </Box>
-                <Box sx={{ p: 0.5 , marginRight: '10px'  }}>
+                <Box sx={{ p: 0.5, marginRight: '10px' }}>
                   <Button
                     type="submit"
                     sx={{
@@ -244,7 +323,7 @@ const HomeSection = () => {
 
       {/* Feed */}
       <Box mt={0} px={0} maxWidth={650} margin="0 auto">
-        {tweets.map((tweet) => (
+        {filteredTweets.map((tweet) => (
           <TweetCard key={tweet.id} tweet={tweet} />
         ))}
       </Box>

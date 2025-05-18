@@ -116,7 +116,7 @@ const Navigation = () => {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          paddingY: 10,
+          paddingY: 6,
           paddingX: 2,
           justifyContent: 'space-between',
         }}
