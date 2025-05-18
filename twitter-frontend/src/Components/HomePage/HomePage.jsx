@@ -5,6 +5,7 @@ import HomeSection from '../HomeSection/HomeSection';
 import Explore from '../ExploreSection/Explore';
 import Profile from "../Profile/Profile.jsx";
 import { Route, Routes } from 'react-router-dom';
+import TweetDetails from "../TweetDetails/TweetDetails.jsx";
 
 
 
@@ -23,8 +24,10 @@ const HomePage = () => {
 
         <Routes>
           <Route path="/" element={<HomeSection />}></Route>
+          <Route path="/home" element={<HomeSection />}></Route>
           {/*<Route path="/profile/:id" element={<Profile />}></Route>*/}
-          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/profile/" element={<Profile />}></Route>
+          <Route path="/twit/:id" element={<TweetDetails />} ></Route>
 
         </Routes>
 

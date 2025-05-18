@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
@@ -73,7 +73,9 @@ const Profile = () => {
     setValue(newValue);
   };
 
-  let activeTab;
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top on component mount
+  },[]);
   return (
     <Box>
       {/* Header */}

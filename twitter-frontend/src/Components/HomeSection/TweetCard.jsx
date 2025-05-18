@@ -12,12 +12,14 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 {/*checking if its updated */}
 const TweetCard = ({ tweet }) => {
-  const likeRef = useRef(null);
+  // const likeRef = useRef(null);
   const [liked, setLiked] = useState(false); // Use useState
   const [retweeted, setRetweeted] = useState(false);
-  const retweetIconRef = useRef(null); // Ref for the retweet icon
+  const retweetIconRef = useRef(null); // Ref for the retweet
+  const navigate = useNavigate();
 
   const handleCommentClick = () => {
     console.log('Comment clicked');
@@ -49,8 +51,10 @@ const TweetCard = ({ tweet }) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', p: 2, borderBottom: '1px solid #e0e0e0', pr:4 }}>
-      <Box sx={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
-        <Avatar alt={tweet.user} src={tweet.avatar} sx={{ width: 45, height: 45, mr: 1, mt: 0.5 }} /> {/* Added mt: 0.5 */}
+
+      {/* eslint-disable-next-line no-undef */}
+      <Box sx={{ display: 'flex', alignItems: 'flex-start', width: '100%', cursor: 'pointer' }} onClick={() => navigate(`/twit/${3}`)}>
+        <Avatar alt={tweet.user} src={tweet.avatar} sx={{ width: 45, height: 45, mr: 1, mt: 0.5 }} />
         <Box sx={{ flexGrow: 1 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
             <Typography fontWeight="bold" sx={{ mr: 0.5 }}>{tweet.user}</Typography>
