@@ -102,10 +102,10 @@ export default function ProfileModal({ open, handleClose, initialProfileData }) 
         </Box>
 
         {/* Form Content Area (Scrollable) */}
-        <form onSubmit={formik.handleSubmit} style={{ flexGrow: 1, overflowY: 'auto' }}>
+        <form onSubmit={formik.handleSubmit} style={{ flexGrow: 1, overflowY: 'auto' }} className={`hideScrollBar`}>
           <Box sx={{ p: 2 }}>
             {/* We will adjust the spacing for the Stack or its children individually */}
-            <Stack spacing={2}> {/* Reduced default spacing for a tighter layout */}
+            <Stack spacing={4}> {/* Reduced default spacing for a tighter layout */}
 
               {/* Background Image Upload */}
               <Box

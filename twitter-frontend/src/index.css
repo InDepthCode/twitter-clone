@@ -14,4 +14,9 @@ html {
     /* ... other styles ... */
 }
 
+.hideScrollBar::-webkit-scrollbar{
+    display: none;
+
+}
+
 
