@@ -1,3 +1,4 @@
+// src/Components/HomeSection/HomeSection.jsx
 import React, { useState } from 'react';
 import { Avatar, Button, CircularProgress, IconButton, Box, Typography, Tabs, Tab } from '@mui/material';
 import * as Yup from 'yup';
@@ -9,9 +10,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import GifBoxIcon from '@mui/icons-material/GifBox';
 import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
 import TweetCard from './TweetCard';
+import ReplyModal from './ReplyModal.jsx'; // Import ReplyModal here
 
-// Sample image URLs
-const allTweets = [ // Renamed to allTweets to represent the full dataset
+// Sample image URLs and allTweets data (your existing data)
+const allTweets = [
   {
     id: 1,
     user: 'Sample User',
@@ -25,8 +27,8 @@ const allTweets = [ // Renamed to allTweets to represent the full dataset
         <Typography component="span" color="primary">#MaterialUI</Typography>
       </>
     ),
-    image: 'https://images.unsplash.com/photo-1552410260-0fd9b577afa6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlvbnxlbnwwfHwwfHx8MA%3D%3D', // Ensure the first tweet has an image
-    tab: 'for-you', // Added a 'tab' property to categorize tweets
+    image: 'https://images.unsplash.com/photo-1552410260-0fd9b577afa6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlvbnxlbnwwfHwwfHx8MA%3D%3D',
+    tab: 'for-you',
   },
   {
     id: 2,
@@ -107,9 +109,13 @@ const HomeSection = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState('for-you');
-  const [tabValue, setTabValue] = useState(0); // State for Tabs component value
+  const [tabValue, setTabValue] = useState(0);
   const [filteredTweets, setFilteredTweets] = useState(allTweets.filter(tweet => tweet.tab === 'for-you'));
-  const iconColor = '#1d9bf0'; // Define the desired icon color
+  const iconColor = '#1d9bf0';
+
+  // State for the ReplyModal
+  const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
+  const [selectedTweetForReply, setSelectedTweetForReply] = useState(null); // This will hold the tweet data for the modal
 
   const handleSubmit = (values, { resetForm }) => {
     console.log("Submitted:", values);
@@ -121,11 +127,9 @@ const HomeSection = () => {
       time: '0m',
       content: values.content,
       image: selectedImage ? URL.createObjectURL(selectedImage) : null,
-      tab: activeTab, // Assign the current active tab to the new tweet
+      tab: activeTab,
     };
     setFilteredTweets([newTweet, ...filteredTweets]);
-    // Optionally update allTweets as well
-    // setAllTweets([newTweet, ...allTweets]);
     resetForm();
     setSelectedImage(null);
   };
@@ -161,17 +165,29 @@ const HomeSection = () => {
     const selectedTabId = tabsData[newValue].id;
     setActiveTab(selectedTabId);
     console.log(`Active Tab: ${selectedTabId}`);
-    // Filter tweets based on the selected tab
     const filtered = allTweets.filter(tweet => tweet.tab === selectedTabId);
     setFilteredTweets(filtered);
   };
+
+  // Function to open the reply modal, passed to TweetCard
+  const handleOpenReplyModal = (tweet) => {
+    setSelectedTweetForReply(tweet); // Set the tweet to be displayed in the modal
+    setIsReplyModalOpen(true);
+  };
+
+  // Function to close the reply modal
+  const handleCloseReplyModal = () => {
+    setIsReplyModalOpen(false);
+    setSelectedTweetForReply(null); // Clear the selected tweet when closed
+  };
+
 
   return (
     <Box
       sx={{
         paddingRight: -1,
         paddingLeft: -1,
-        paddingTop: 0, // Changed from -1
+        paddingTop: 0,
         borderRight: (theme) => `1px solid ${theme.palette.divider}`
       }}
     >
@@ -207,27 +223,10 @@ const HomeSection = () => {
             ))}
           </Tabs>
         </Box>
-
-        {/* Tab Panels (Conditionally render content if needed) */}
-        {/* {tabsData.map((tab, index) => (
-          <Box
-            key={tab.id}
-            role="tabpanel"
-            hidden={tabValue !== index}
-            id={`tabpanel-${tab.id}`}
-            aria-labelledby={`tab-${tab.id}`}
-            mt={2}
-          >
-            {tabValue === index && (
-              <Typography>{`Content for ${tab.label}`}</Typography>
-            )}
-          </Box>
-        ))} */}
       </Box>
 
       {/* Tweet Box */}
       <Box sx={{ mt: 1, ml: 1, pb: 1, borderBottom: (theme) => `1px solid ${theme.palette.divider}`, pl: 1, pt: 0 }}>
-        {/* ... (Tweet input box code remains the same) ... */}
         <Box className="flex items-start mr-11">
           <Avatar
             alt="user"
@@ -324,9 +323,22 @@ const HomeSection = () => {
       {/* Feed */}
       <Box mt={0} px={0} maxWidth={650} margin="0 auto">
         {filteredTweets.map((tweet) => (
-          <TweetCard key={tweet.id} tweet={tweet} />
+          <TweetCard
+            key={tweet.id}
+            tweet={tweet}
+            onCommentClick={handleOpenReplyModal} // Pass the handler down
+          />
         ))}
       </Box>
+
+      {/* Render ReplyModal here, controlled by HomeSection's state */}
+      {selectedTweetForReply && ( // Only render if a tweet is selected
+        <ReplyModal
+          open={isReplyModalOpen}
+          onClose={handleCloseReplyModal}
+          tweet={selectedTweetForReply} // Pass the selected tweet data
+        />
+      )}
     </Box>
   );
 };

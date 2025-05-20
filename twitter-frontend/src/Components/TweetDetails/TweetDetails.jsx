@@ -1,40 +1,44 @@
-import React, { useEffect } from 'react';
+// src/Components/TweetDetails.jsx
+import React, { useEffect, useState } from 'react'; // Import useState
 import { Box, Divider, IconButton, Typography, Avatar } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import TweetCard from "../HomeSection/TweetCard.jsx";
+import ReplyModal from "../HomeSection/ReplyModal.jsx"; // Import ReplyModal here
 
 const TweetDetails = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // Get the tweet ID from the URL
+  const { id } = useParams();
   const handleBack = () => navigate(-1);
 
+  // State for ReplyModal (specific to TweetDetails)
+  const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
+  const [selectedTweetForReply, setSelectedTweetForReply] = useState(null);
+
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top on component mount
+    window.scrollTo(0, 0);
   }, []);
 
-  // Replace this with your actual logic to fetch the main tweet and any
-  // related replies or content based on the 'id'
+  // Your mainTweet and replies data (replace with actual fetches)
   const mainTweet = {
     id: id,
     user: '__Amrut_',
     username: 'CubesSolves',
-    avatar: '../../assets/pfp3.jpg', // Adjust the path as needed
-    time: '8:11 PM May 15, 2025', // Example timestamp
+    avatar: '../../assets/pfp3.jpg',
+    time: '8:11 PM May 15, 2025',
     content: 'Almost finished the middle part now btw i am using React.js and Tailwind now onto the Explore part.',
-    image: 'https://pbs.twimg.com/media/GEgKz-xa0AAQ9iK?format=jpg&name=small', // Example image URL
+    image: 'https://pbs.twimg.com/media/GEgKz-xa0AAQ9iK?format=jpg&name=small',
     likeCount: 3,
     replyCount: 2,
     retweetCount: 2,
   };
 
-  // Example array of replies (replace with your fetched data)
   const replies = [
     {
       id: `reply-${id}-1`,
       user: 'Shubham T',
       username: 'ShubhamTambwe',
-      avatar: 'https://pbs.twimg.com/profile_images/1674073787273744384/w4m475_normal.jpg', // Example avatar
+      avatar: 'https://pbs.twimg.com/profile_images/1674073787273744384/w4m475_normal.jpg',
       time: 'May 15',
       content: 'Looks good 👍',
       likeCount: 1,
@@ -43,6 +47,19 @@ const TweetDetails = () => {
     },
     // Add more replies here
   ];
+
+  // Function to open the reply modal
+  const handleOpenReplyModal = (tweetToReplyTo) => {
+    setSelectedTweetForReply(tweetToReplyTo);
+    setIsReplyModalOpen(true);
+  };
+
+  // Function to close the reply modal
+  const handleCloseReplyModal = () => {
+    setIsReplyModalOpen(false);
+    setSelectedTweetForReply(null);
+  };
+
 
   return (
     <React.Fragment>
@@ -61,7 +78,8 @@ const TweetDetails = () => {
 
       {/* Main Tweet Section */}
       <Box>
-        {mainTweet && <TweetCard tweet={mainTweet} isDetailedTweet={true} />}
+        {/* Pass onCommentClick to the main tweet for direct replies */}
+        {mainTweet && <TweetCard tweet={mainTweet} isDetailedTweet={true} onCommentClick={handleOpenReplyModal} />}
         <Divider />
       </Box>
 
@@ -69,7 +87,8 @@ const TweetDetails = () => {
       <Box mt={2}>
         {replies.map((reply) => (
           <Box key={reply.id} sx={{ pl: 2 }}>
-            <TweetCard tweet={reply} isComment={true} />
+            {/* Pass onCommentClick to each reply if you want to reply to replies */}
+            <TweetCard tweet={reply} isComment={true} onCommentClick={handleOpenReplyModal} />
             <Divider />
           </Box>
         ))}
@@ -78,12 +97,24 @@ const TweetDetails = () => {
         )}
       </Box>
 
-      {/* Add a section for composing a reply if needed */}
+      {/* Add a section for composing a reply if needed (or rely solely on the modal) */}
       <Box sx={{ p: 2, mt: 2, borderTop: '1px solid #e0e0e0' }}>
-        {/* Placeholder for a reply input */}
         <Typography variant="h6" color="textSecondary">Reply</Typography>
-        {/* You can add an Avatar and a text input here */}
+        {/* You might add a text input here for a quick reply,
+            or encourage opening the modal.
+            You could also have a button here that calls handleOpenReplyModal(mainTweet)
+            to reply directly to the main tweet.
+        */}
       </Box>
+
+      {/* Render ReplyModal here, controlled by TweetDetails's state */}
+      {selectedTweetForReply && (
+        <ReplyModal
+          open={isReplyModalOpen}
+          onClose={handleCloseReplyModal}
+          tweet={selectedTweetForReply}
+        />
+      )}
     </React.Fragment>
   );
 };
