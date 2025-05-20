@@ -121,17 +121,17 @@ const Navigation = () => {
           justifyContent: 'space-between',
         }}
       >
-        <div className="flex space-x-3 gap-2 py-10">
+        <div className="flex space-x-3 gap-1 py-10">
           <Avatar
             alt="sample user"
-            src="https://i.pravatar.cc/150?u=consistentmaleid"
+            src="http://localhost:5173/src/assets/pfp3.jpg"
             sx={{ width: 40, height: 40 }}
             className="cursor-pointer"
           />
-          <div className='px-5 py-4'>
-            <div className="flex flex-col items-center text-sm">
-              <span className="font-bold cursor-pointer hover:underline">Sample User</span>
-              <span className="text-gray-500 ml-1 cursor-pointer">@sampleuser</span>
+          <div className='px-5 py-3'>
+            <div className="flex flex-col" sx={{mt:-1}}> {/* Removed items-center */}
+              <span className="font-bold cursor-pointer hover:underline">__Amrut_</span>
+              <span className="text-gray-500">@CubesSolve</span> {/* Removed ml-1 */}
             </div>
           </div>
         </div>

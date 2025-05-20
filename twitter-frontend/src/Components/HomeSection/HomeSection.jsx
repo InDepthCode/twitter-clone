@@ -203,7 +203,7 @@ const HomeSection = () => {
             indicatorColor="primary"
             textColor="inherit"
           >
-            {tabsData.map((tab, index) => (
+            {tabsData.map((tab) => (
               <Tab
                 key={tab.id}
                 label={tab.label}
@@ -214,6 +214,8 @@ const HomeSection = () => {
                   '&.Mui-selected': {
                     fontWeight: 'bold',
                     color: 'black',
+
+
                   },
                   '&:hover': {
                     color: 'black',

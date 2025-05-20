@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
@@ -10,9 +10,10 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import {  Tabs, Tab } from '@mui/material';
+import { Tabs, Tab } from '@mui/material';
 import TweetCard from '../HomeSection/TweetCard.jsx';
 import ProfileModal from "./ProfileModal.jsx"; // Make sure this path is correct
+import ReplyModal from '../HomeSection/ReplyModal.jsx'; // Import ReplyModal here
 
 const sampleTweets = [
   {
@@ -21,18 +22,29 @@ const sampleTweets = [
     username: 'CubesSolves',
     avatar: pfp,
     time: '1m',
-    content: <img
-      src='https://images.unsplash.com/photo-1500463959177-e0869687df26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dGlnZXJ8ZW58MHx8MHx8fDA%3D'
-      alt="Tiger" style={{maxWidth: '100%', borderRadius: '8px'}}/>,
+    content: (
+      <img
+        src='https://images.unsplash.com/photo-1500463959177-e0869687df26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dGlnZXJ8ZW58MHx8MHx8fDA%3D'
+        alt="Tiger" style={{ maxWidth: '100%', borderRadius: '8px' }}/>
+    ),
+    // Add default counts for TweetCard to display them
+    likeCount: 200, //
+    replyCount: 13, //
+    retweetCount: 25, //
+    viewsCount: '1.2K', //
   },
   {
     id: 102,
-    user: 'User 2',
-    username: 'user2',
-    avatar: 'https://i.pravatar.cc/150?u=user2',
+    user: '__Amrut_',
+    username: 'CubesSolves',
+    avatar: 'http://localhost:5173/src/assets/pfp3.jpg',
     time: '5m',
     content:'This is a post by user 2.',
-
+    // Add default counts
+    likeCount: 200, //
+    replyCount: 13, //
+    retweetCount: 25, //
+    viewsCount: '1.2K', //
   },
   // Add more sample tweets here
 ];
@@ -41,43 +53,52 @@ const Profile = () => {
   const navigate = useNavigate();
   const handleBack = () => navigate(-1);
   const isCurrentUserProfile = true; // Replace with your actual logic
-  const displayName = "__Amrut_"; // Replace with actual display name
-  const username = "@CubesSolves"; // Replace with actual username
-  const bio = "Hello, I'm code with Amrut, you will find full stack project tutorial on our website"; // Replace with actual bio
-  const location = "Indian"; // Replace with actual location
-  const joinedDate = "Joined Jun 2022"; // Replace with actual joined date
-  const followingCount = 300; // Replace with actual following count
-  const followersCount =" 1M"; // Replace with actual followers count
+  const displayName = "__Amrut_"; //
+  const username = "@CubesSolves"; //
+  const bio = "Hello, I'm code with Amrut, you will find full stack project tutorial on our website"; //
+  const location = "Indian"; //
+  const joinedDate = "Joined Jun 2022"; //
+  const followingCount = 300; //
+  const followersCount = "1M"; //
 
-  // --- START OF CRITICAL CHANGES ---
   // State to control the ProfileModal's visibility
   const [openProfileModal, setOpenProfileModal] = useState(false);
 
-  // Function to open the modal
+  // --- START: ReplyModal Specific States and Handlers ---
+  const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
+  const [selectedTweetForReply, setSelectedTweetForReply] = useState(null);
+
+  const handleOpenReplyModal = (tweetToReplyTo) => {
+    setSelectedTweetForReply(tweetToReplyTo);
+    setIsReplyModalOpen(true);
+  };
+
+  const handleCloseReplyModal = () => {
+    setIsReplyModalOpen(false);
+    setSelectedTweetForReply(null);
+  };
+  // --- END: ReplyModal Specific States and Handlers ---
+
   const handleOpenProfileModel = () => {
     setOpenProfileModal(true);
   };
 
-  // Function to close the modal
   const handleCloseProfileModal = () => {
     setOpenProfileModal(false);
   };
-
-  // --- END OF CRITICAL CHANGES ---
 
   const handleFollowUser = () => {
     console.log("Follow user");
     // Implement your follow logic here
   };
 
-
   const tabsData = [
-    { id: 'posts', label: 'Posts' },
-    { id: 'replies', label: 'Replies' },
-    { id: 'highlights', label: 'Highlights' },
-    { id: 'article', label: 'Articles' },
-    { id: 'media', label: 'Media' },
-    { id: 'likes', label: 'Likes' },
+    { id: 'posts', label: 'Posts' }, //
+    { id: 'replies', label: 'Replies' }, //
+    { id: 'highlights', label: 'Highlights' }, //
+    { id: 'article', label: 'Articles' }, //
+    { id: 'media', label: 'Media' }, //
+    { id: 'likes', label: 'Likes' }, //
   ];
 
   const [value, setValue] = useState(0);
@@ -89,6 +110,7 @@ const Profile = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top on component mount
   },[]);
+
   return (
     <Box>
       {/* Header */}
@@ -115,7 +137,7 @@ const Profile = () => {
         <Box sx={{ position: 'absolute', top: '-9rem', left: '1rem', display: 'flex', alignItems: 'center', ml:1 }}>
           <Avatar
             alt={displayName}
-            src={pfp} // Use your imported profile picture
+            src={pfp}
             sx={{ width: "9rem", height: "9rem", border: "4px solid white", mr: 1 }}
             className="cursor-pointer shadow-md"
           />
@@ -127,7 +149,6 @@ const Profile = () => {
             variant="outlined"
             size="small"
             sx={{ borderRadius: '9999px', color: 'black', borderColor: 'rgba(0, 0, 0, 0.23)' , mr:3 }}
-            // This onClick correctly calls the handleOpenProfileModel defined inside the component
             onClick={isCurrentUserProfile ? handleOpenProfileModel : handleFollowUser}
           >
             {isCurrentUserProfile ? 'Edit profile' : 'Follow'}
@@ -194,7 +215,11 @@ const Profile = () => {
             {value === index && tab.id === 'posts' && (
               <Box>
                 {sampleTweets.map((tweet) => (
-                  <TweetCard key={tweet.id} tweet={tweet} />
+                  <TweetCard
+                    key={tweet.id}
+                    tweet={tweet}
+                    onCommentClick={handleOpenReplyModal} // <--- THIS IS THE MISSING PIECE!
+                  />
                 ))}
               </Box>
             )}
@@ -206,6 +231,15 @@ const Profile = () => {
 
         {/* Profile Modal - Ensure it's rendered within the component and receives props */}
         <ProfileModal open={openProfileModal} handleClose={handleCloseProfileModal} />
+
+        {/* Reply Modal - RENDERED HERE, controlled by Profile component's state */}
+        {selectedTweetForReply && ( // Only render if a tweet has been selected for reply
+          <ReplyModal
+            open={isReplyModalOpen}
+            onClose={handleCloseReplyModal}
+            tweet={selectedTweetForReply}
+          />
+        )}
       </Box>
     </Box>
   );

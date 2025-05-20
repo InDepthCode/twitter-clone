@@ -27,7 +27,7 @@ const TweetDetails = () => {
     avatar: '../../assets/pfp3.jpg',
     time: '8:11 PM May 15, 2025',
     content: 'Almost finished the middle part now btw i am using React.js and Tailwind now onto the Explore part.',
-    image: 'https://pbs.twimg.com/media/GEgKz-xa0AAQ9iK?format=jpg&name=small',
+    image: 'https://images.unsplash.com/photo-1552410260-0fd9b577afa6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlvbnxlbnwwfHwwfHx8MA%3D%3D',
     likeCount: 3,
     replyCount: 2,
     retweetCount: 2,
