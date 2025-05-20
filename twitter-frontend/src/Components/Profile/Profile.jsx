@@ -12,15 +12,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import {  Tabs, Tab } from '@mui/material';
 import TweetCard from '../HomeSection/TweetCard.jsx';
-
-function handleOpenProfileModel() {
-  console.log("Open profile model");
-}
-
-function handleFollowUser() {
-  console.log("Follow user");
-}
-
+import ProfileModal from "./ProfileModal.jsx"; // Make sure this path is correct
 
 const sampleTweets = [
   {
@@ -51,11 +43,32 @@ const Profile = () => {
   const isCurrentUserProfile = true; // Replace with your actual logic
   const displayName = "__Amrut_"; // Replace with actual display name
   const username = "@CubesSolves"; // Replace with actual username
-  const bio = "Hello, im code with Amrut, you will find full stack project tutorial on our website"; // Replace with actual bio
+  const bio = "Hello, I'm code with Amrut, you will find full stack project tutorial on our website"; // Replace with actual bio
   const location = "Indian"; // Replace with actual location
   const joinedDate = "Joined Jun 2022"; // Replace with actual joined date
   const followingCount = 300; // Replace with actual following count
   const followersCount =" 1M"; // Replace with actual followers count
+
+  // --- START OF CRITICAL CHANGES ---
+  // State to control the ProfileModal's visibility
+  const [openProfileModal, setOpenProfileModal] = useState(false);
+
+  // Function to open the modal
+  const handleOpenProfileModel = () => {
+    setOpenProfileModal(true);
+  };
+
+  // Function to close the modal
+  const handleCloseProfileModal = () => {
+    setOpenProfileModal(false);
+  };
+
+  // --- END OF CRITICAL CHANGES ---
+
+  const handleFollowUser = () => {
+    console.log("Follow user");
+    // Implement your follow logic here
+  };
 
 
   const tabsData = [
@@ -106,17 +119,15 @@ const Profile = () => {
             sx={{ width: "9rem", height: "9rem", border: "4px solid white", mr: 1 }}
             className="cursor-pointer shadow-md"
           />
-          {/* The verified icon in the image seems to be next to the display name, not the avatar */}
         </Box>
-
 
         {/* Edit Profile Button */}
         <Box sx={{ position: 'absolute', top: '-5rem', right: '1rem' }}>
-          {/*<EmailOutlinedIcon />*/}
           <Button
             variant="outlined"
             size="small"
             sx={{ borderRadius: '9999px', color: 'black', borderColor: 'rgba(0, 0, 0, 0.23)' , mr:3 }}
+            // This onClick correctly calls the handleOpenProfileModel defined inside the component
             onClick={isCurrentUserProfile ? handleOpenProfileModel : handleFollowUser}
           >
             {isCurrentUserProfile ? 'Edit profile' : 'Follow'}
@@ -192,8 +203,11 @@ const Profile = () => {
             )}
           </Box>
         ))}
+
+        {/* Profile Modal - Ensure it's rendered within the component and receives props */}
+        <ProfileModal open={openProfileModal} handleClose={handleCloseProfileModal} />
       </Box>
-      </Box>
+    </Box>
   );
 };
 
