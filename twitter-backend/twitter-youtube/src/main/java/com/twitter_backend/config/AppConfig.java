@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -29,7 +31,7 @@ public class AppConfig {
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                // .addFilterBefore(null, BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtTockenValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .httpBasic(withDefaults())
@@ -41,13 +43,24 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
-        cors.setAllowedOrigins(List.of("*")); // Use specific domains in production
+
+        cors.setAllowedOrigins(List.of("*")); // Replace with specific domains in production
         cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        cors.setAllowedHeaders(List.of("*"));
-        cors.setAllowCredentials(true); // Optional: if cookies/auth headers needed
+        cors.setAllowedHeaders(List.of("*")); // Or specify headers like "Authorization", "Content-Type"
+        cors.setExposedHeaders(List.of("Authorization", "Content-Type")); // Add any custom headers here
+        cors.setAllowCredentials(true);
+        cors.setMaxAge(3600L); // Cache pre-flight response for 1 hour
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cors);
         return source;
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+
 }
