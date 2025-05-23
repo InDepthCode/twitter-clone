@@ -24,7 +24,7 @@ public class Twit {
 
     private String content;
     private String image;
-    private String video;w
+    private String video;
 
     @OneToMany(mappedBy = "twit", cascade = CascadeType.ALL)  // one user  can like one tweet
     private List<Like> likes = new ArrayList<>();
