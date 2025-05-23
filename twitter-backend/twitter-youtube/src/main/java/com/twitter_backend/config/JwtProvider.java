@@ -1,5 +1,6 @@
 package com.twitter_backend.config;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.apache.catalina.User;
@@ -16,8 +17,30 @@ public class JwtProvider {
     // generate token
 
     public String generateJwtToken(Authentication authentication) {
-        String jwt = Jwts.builder()
-                .setIssuedAt(Date.from(Instant.now()))
-                .setEpiration(new Date(new))
+        return Jwts
+                        .builder()
+                .issuedAt(new Date())
+                .expiration(new Date(new Date().getTime()+86400000))
+                .claim("email", authentication.getName())
+                .signWith(key)
+                .compact();
+
+
+    }
+
+    // i need a method which i pass token and it gives me the email
+
+    public String getEmailFromJwtToken(String jwt) {
+       jwt = jwt.substring(7);
+        Claims claim = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(jwt)
+                .getPayload();
+
+
+        String email = String.valueOf(claim.get("email"));
+
+        return email;
     }
 }
