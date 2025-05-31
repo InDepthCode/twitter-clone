@@ -24,7 +24,7 @@ public interface TwitRepository extends JpaRepository<Twit, Long> {
     * Finds all tweets that either a specific user retweeted OR were originally posted by a specific user (and are actual tweets and not the retweets), ordered by creation date from newest to oldest;
     *
     * */
-    List<Twit> findByRetwitUserContainsOrUser_IdIsTwitTrueOrderByCreatedAtDesc(User user, Long userid);
+    List<Twit> findByRetwitUserContainsOrUser_IdAndIsTwitTrueOrderByCreatedAtDesc(User user, Long userId);
 
 
     /* Finds all tweets that a specific user has liked, ordered by their creation date from newest to oldest.
