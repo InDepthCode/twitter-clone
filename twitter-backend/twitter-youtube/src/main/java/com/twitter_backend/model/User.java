@@ -13,52 +13,50 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // it will auto generate id
+    @GeneratedValue(strategy = GenerationType.AUTO) // Auto-generates a unique ID for each user.
     private Long id;
 
-    private String fullName;
+    private String fullName; // Stores the user's full name.
 
-    private String location;
+    private String location; // Stores the user's geographical location.
 
-    private String website;
+    private String website; // Stores the URL of the user's personal website.
 
-    private String birthDate;
+    private String birthDate; // Stores the user's birth date.
 
-    private String email;
+    private String email; // Stores the user's email address (often used for login).
 
-    private String password;
+    private String password; // Stores the hashed password for user authentication.
 
-    private String image;
+    private String image; // Stores the URL of the user's profile picture.
 
-    private String backGroundImage;
+    private String backGroundImage; // Stores the URL of the user's profile background image.
 
-    private String bio;
+    private String bio; // Stores a short biography or description about the user.
 
-    private boolean req_user;
+    private boolean req_user; // Indicates if this is the currently authenticated/requested user (often temporary).
 
-    private boolean login_with_google;
+    private boolean login_with_google; // Flags if the user registered/logged in via Google.
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)  // one user has multiple tweets
+    @JsonIgnore // Prevents this field from being serialized to JSON when the User object is returned.
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)  // A single user can have multiple tweets.
     private List<Twit> twit = new ArrayList<>();
 
-    // cascade here is used for a purpose suppose i have removed this user then all the tweets related to him gets removed
+    // CascadeType.ALL ensures that if a user is deleted, all their associated tweets are also deleted.
 
-    // list of likes done by user
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) //
+    // List of likes made by this user.
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // One user can make many likes.
     private List<Like> likes = new ArrayList<>();
 
-    @Embedded
+    @Embedded // Embeds fields from the Varification class directly into the User table.
     private Varification verification;
 
-    @JsonIgnore
-    @ManyToMany // for followers, one user has multiple followers and multiple following
+    @JsonIgnore // Prevents follower list from being serialized to JSON.
+    @ManyToMany // Many users can follow many other users (bi-directional relationship).
     private List<User> followers = new ArrayList<>();
 
-    @JsonIgnore
-    @ManyToMany
+    @JsonIgnore // Prevents following list from being serialized to JSON.
+    @ManyToMany // Many users can follow many other users (bi-directional relationship).
     private List<User> followings = new ArrayList<>();
-
-
 
 }

@@ -1,17 +1,21 @@
 // src/Components/TweetDetails.jsx
-import React, { useEffect, useState } from 'react'; // Import useState
-import { Box, Divider, IconButton, Typography, Avatar } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import TweetCard from "../HomeSection/TweetCard.jsx";
-import ReplyModal from "../HomeSection/ReplyModal.jsx"; // Import ReplyModal here
+import ReplyModal from "../HomeSection/ReplyModal.jsx";
+import pfp3 from '../../assets/pfp3.jpg'; // Import avatar properly
 
 const TweetDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const handleBack = () => navigate(-1);
 
-  // State for ReplyModal (specific to TweetDetails)
+  const handleBack = () => {
+    if (window.history.length > 2) navigate(-1);
+    else navigate('/');
+  };
+
   const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
   const [selectedTweetForReply, setSelectedTweetForReply] = useState(null);
 
@@ -19,12 +23,11 @@ const TweetDetails = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Your mainTweet and replies data (replace with actual fetches)
   const mainTweet = {
     id: id,
     user: '__Amrut_',
     username: 'CubesSolves',
-    avatar: '../../assets/pfp3.jpg',
+    avatar: pfp3,
     time: '8:11 PM May 15, 2025',
     content: 'Almost finished the middle part now btw i am using React.js and Tailwind now onto the Explore part.',
     image: 'https://images.unsplash.com/photo-1552410260-0fd9b577afa6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGlvbnxlbnwwfHwwfHx8MA%3D%3D',
@@ -45,30 +48,25 @@ const TweetDetails = () => {
       replyCount: 0,
       retweetCount: 0,
     },
-    // Add more replies here
   ];
 
-  // Function to open the reply modal
   const handleOpenReplyModal = (tweetToReplyTo) => {
     setSelectedTweetForReply(tweetToReplyTo);
     setIsReplyModalOpen(true);
   };
 
-  // Function to close the reply modal
   const handleCloseReplyModal = () => {
     setIsReplyModalOpen(false);
     setSelectedTweetForReply(null);
   };
 
-
   return (
-    <React.Fragment>
-      {/* Header */}
+    <>
       <Box
         className="z-50 flex items-center sticky top-0 bg-white bg-opacity-95 border-b border-gray-200 p-2 w-full"
         sx={{ justifyContent: 'flex-start', alignItems: 'center', ml: 0.2, mt: 2 }}
       >
-        <IconButton onClick={handleBack} sx={{ mr: 1 }}>
+        <IconButton onClick={handleBack} aria-label="Go back" sx={{ mr: 1 }}>
           <ArrowBackIcon className="cursor-pointer text-gray-800" />
         </IconButton>
         <Typography variant="h6" className="font-bold text-gray-900 opacity-90">
@@ -76,38 +74,34 @@ const TweetDetails = () => {
         </Typography>
       </Box>
 
-      {/* Main Tweet Section */}
       <Box>
-        {/* Pass onCommentClick to the main tweet for direct replies */}
-        {mainTweet && <TweetCard tweet={mainTweet} isDetailedTweet={true} onCommentClick={handleOpenReplyModal} />}
+        {mainTweet && (
+          <TweetCard
+            tweet={mainTweet}
+            isDetailedTweet={true}
+            onCommentClick={handleOpenReplyModal}
+          />
+        )}
         <Divider />
       </Box>
 
-      {/* Replies Section */}
       <Box mt={2}>
-        {replies.map((reply) => (
-          <Box key={reply.id} sx={{ pl: 2 }}>
-            {/* Pass onCommentClick to each reply if you want to reply to replies */}
-            <TweetCard tweet={reply} isComment={true} onCommentClick={handleOpenReplyModal} />
-            <Divider />
-          </Box>
-        ))}
-        {replies.length === 0 && (
+        {replies.length > 0 ? (
+          replies.map((reply) => (
+            <Box key={reply.id} sx={{ pl: 2 }}>
+              <TweetCard
+                tweet={reply}
+                isComment={true}
+                onCommentClick={handleOpenReplyModal}
+              />
+              <Divider />
+            </Box>
+          ))
+        ) : (
           <Typography sx={{ p: 2, color: 'textSecondary' }}>No replies yet.</Typography>
         )}
       </Box>
 
-      {/* Add a section for composing a reply if needed (or rely solely on the modal) */}
-      <Box sx={{ p: 2, mt: 2, borderTop: '1px solid #e0e0e0' }}>
-        <Typography variant="h6" color="textSecondary">Reply</Typography>
-        {/* You might add a text input here for a quick reply,
-            or encourage opening the modal.
-            You could also have a button here that calls handleOpenReplyModal(mainTweet)
-            to reply directly to the main tweet.
-        */}
-      </Box>
-
-      {/* Render ReplyModal here, controlled by TweetDetails's state */}
       {selectedTweetForReply && (
         <ReplyModal
           open={isReplyModalOpen}
@@ -115,7 +109,7 @@ const TweetDetails = () => {
           tweet={selectedTweetForReply}
         />
       )}
-    </React.Fragment>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/twitter-backend.iml" filepath="$PROJECT_DIR$/.idea/twitter-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/twitter-youtube/twitter-youtube.iml" filepath="$PROJECT_DIR$/twitter-youtube/twitter-youtube.iml" />
     </modules>
   </component>
 </project>
