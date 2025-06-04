@@ -1,6 +1,7 @@
 package com.twitter_backend.controller;
 
 
+import com.twitter_backend.dto.TwitDto;
 import com.twitter_backend.service.TwitService;
 import com.twitter_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
