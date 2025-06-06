@@ -1,6 +1,5 @@
 package com.twitter_backend.controller;
 
-
 import com.twitter_backend.dto.LikeDto;
 import com.twitter_backend.exception.TwitException;
 import com.twitter_backend.exception.UserException;
@@ -26,26 +25,21 @@ public class LikeController {
     private LikeService likeService;
 
 
-    // to like tweet
-    @PostMapping("/{twitId}/likes")
+    // To like a twit (create a like resource)
+    @PostMapping("/{twitId}/likes") // This remains a POST
     public ResponseEntity<LikeDto> likeTwit(@PathVariable long twitId, @RequestHeader("Authorization") String jwt) throws UserException, TwitException {
         User user = userService.findUserByJwt(jwt);
         Like like = likeService.likeTwit(twitId, user);
         LikeDto likeDto = LikeDtoMapper.toLikeDto(like,user);
-        return new ResponseEntity<>(likeDto, HttpStatus.OK);
+        return new ResponseEntity<>(likeDto, HttpStatus.CREATED); // Often HttpStatus.CREATED (201) for resource creation
     }
 
-
-
-    @PostMapping("/{twitId}/likes")
+    // To get all likes for a twit (retrieve resources)
+    @GetMapping("/{twitId}/likes") // Changed to GET
     public ResponseEntity<List<LikeDto>> getAllLikes(@PathVariable long twitId, @RequestHeader("Authorization") String jwt) throws UserException, TwitException {
-        User user = userService.findUserByJwt(jwt);
-        List<Like> like = likeService.getAllLikes(twitId);
-        List<LikeDto> likeDtos = LikeDtoMapper.toLikeDtos(like,user);
+        User user = userService.findUserByJwt(jwt); // User context might be needed for isLiked/isFollowed flags in DTO
+        List<Like> likes = likeService.getAllLikes(twitId); // Changed variable name to plural
+        List<LikeDto> likeDtos = LikeDtoMapper.toLikeDtos(likes,user);
         return new ResponseEntity<>(likeDtos, HttpStatus.OK);
     }
-
-
-
-
 }
