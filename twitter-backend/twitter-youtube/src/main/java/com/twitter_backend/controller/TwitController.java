@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/twit")
+@RequestMapping("/api/twits")
 public class TwitController {
 
     @Autowired
